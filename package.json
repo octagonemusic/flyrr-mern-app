@@ -1,0 +1,23 @@
+{
+  "name": "flyrr",
+  "version": "1.0.0",
+  "description": "A real-time chat application built using the MERN Stack.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "author": "Bhargav Prasad",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jose": "^4.14.6",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.1",
+    "nodemon": "^3.0.1",
+    "socket.io": "^4.7.2"
+  }
+}
