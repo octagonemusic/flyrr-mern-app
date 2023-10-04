@@ -26,6 +26,7 @@ import UserListItem from "../user-avatar/UserListItem";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
+import { getSender } from "../../config/ChatLogics";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -36,7 +37,14 @@ const SideDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -137,8 +145,39 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton p={1}>
               <BellIcon fontSize="2xl" m={1} />
+              {notification.length != 0 && (
+                <Box
+                  as={"span"}
+                  color={"white"}
+                  position={"absolute"}
+                  fontSize={"0.7rem"}
+                  bgColor={"red"}
+                  borderRadius={"50%"}
+                  zIndex={9999}
+                  ml="-1rem"
+                  width="1rem"
+                  height="1rem"
+                >
+                  <b>{notification.length}</b>
+                </Box>
+              )}
             </MenuButton>
-            {/* {<MenuList></MenuList>} */}
+            <MenuList pl="2" pr="2">
+              {!notification.length && "No new messages."}
+              {notification.map((notif, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New message in ${notif.chat.chatName}`
+                    : `New message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
