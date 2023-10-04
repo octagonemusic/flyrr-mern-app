@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import ScrollableFeed from "react-scrollable-feed";
 import {
   isLastMessage,
   isSameSender,
