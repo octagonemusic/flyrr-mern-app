@@ -103,6 +103,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         };
 
+        setNewMessage("");
+
         const { data } = await axios.post(
           "/api/message",
           {
@@ -111,8 +113,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
-
-        setNewMessage("");
 
         socket.emit("new message", data);
         setMessages([...messages, data]);
