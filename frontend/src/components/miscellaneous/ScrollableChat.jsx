@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import ScrollableFeed from "react-scrollable-feed";
 import {
   isLastMessage,
@@ -12,6 +12,16 @@ import "./styles.css";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
+
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (messages.length) {
+      ref.current?.scrollIntoView({
+        behavior: "auto",
+      });
+    }
+  }, [messages.length]);
 
   return (
     <div className="scroll-feed">
@@ -48,6 +58,7 @@ const ScrollableChat = ({ messages }) => {
             </span>
           </div>
         ))}
+      <div ref={ref} />
     </div>
   );
 };
