@@ -8,12 +8,13 @@ import {
 } from "../../config/ChatLogics";
 import { ChatState } from "../../context/ChatProvider";
 import { Avatar, Tooltip } from "@chakra-ui/react";
+import "./styles.css";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
 
   return (
-    <ScrollableFeed>
+    <div className="scroll-feed">
       {messages &&
         messages.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
@@ -47,7 +48,7 @@ const ScrollableChat = ({ messages }) => {
             </span>
           </div>
         ))}
-    </ScrollableFeed>
+    </div>
   );
 };
 
