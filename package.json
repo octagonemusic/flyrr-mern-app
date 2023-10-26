@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon backend/server.js",
-    "build": "npm install && npm install --prefix --production=false frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend --production=false && npm run build --prefix frontend"
   },
   "author": "Bhargav Prasad",
   "license": "ISC",
