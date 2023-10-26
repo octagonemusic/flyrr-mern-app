@@ -17,7 +17,7 @@ import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://https://flyrrchat.onrender.com:5000";
+const ENDPOINT = "https://flyrrchat.onrender.com:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
