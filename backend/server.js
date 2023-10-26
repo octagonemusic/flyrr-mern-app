@@ -8,7 +8,6 @@ const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-const cors = require("cors");
 
 dotenv.config();
 connectDB();
@@ -48,11 +47,9 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "*",
+    origin: "https://flyrrchat.onrender.com",
   },
 });
-
-app.use(cors());
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io!");
