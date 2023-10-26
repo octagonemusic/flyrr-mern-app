@@ -9,7 +9,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://flyrrchat.onrender.com/chats:5000",
+        target: "https://flyrrchat.onrender.com:5000",
         changeOrigin: true,
         secure: false,
       },
