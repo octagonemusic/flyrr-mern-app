@@ -28,7 +28,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { getSender } from "../../config/ChatLogics";
 
-const SideDrawer = () => {
+const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -190,7 +190,12 @@ const SideDrawer = () => {
               />
             </MenuButton>
             <MenuList>
-              <ProfileModal user={user}>
+              <ProfileModal
+                user={user}
+                fetchAgain={fetchAgain}
+                setFetchAgain={setFetchAgain}
+                whoseProfile={true}
+              >
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
