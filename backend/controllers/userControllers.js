@@ -72,4 +72,24 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
-module.exports = { registerUser, authUser, allUsers };
+const updateProfilePic = asyncHandler(async (req, res) => {
+  const { pic } = req.body;
+
+  if (!pic) {
+    res.status(400);
+    throw new Error("Please select an image");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.pic = pic;
+    await user.save();
+    res.send({ message: "Profile picture updated" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+module.exports = { registerUser, authUser, allUsers, updateProfilePic };
