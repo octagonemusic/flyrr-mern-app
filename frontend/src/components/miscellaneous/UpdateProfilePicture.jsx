@@ -89,7 +89,7 @@ const UpdateProfilePicture = ({
           },
         };
 
-        const { data } = await axios.put(
+        const { data } = await axios.patch(
           "/api/user/updateprofilepic",
           { pic },
           config
