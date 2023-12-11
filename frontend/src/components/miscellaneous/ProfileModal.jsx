@@ -12,9 +12,17 @@ import {
   ModalCloseButton,
   Image,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
+import UpdateProfilePicture from "./UpdateProfilePicture";
 
-const ProfileModal = ({ user, children }) => {
+const ProfileModal = ({
+  user,
+  fetchAgain,
+  setFetchAgain,
+  whoseProfile,
+  children,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -43,13 +51,26 @@ const ProfileModal = ({ user, children }) => {
             alignItems="center"
             justifyContent="center"
           >
-            <Image
-              borderRadius="50%"
-              boxSize="150px"
-              src={user.pic}
-              alt={user.name}
-              marginBottom="1.5rem"
-            />
+            <UpdateProfilePicture
+              user={user}
+              fetchAgain={fetchAgain}
+              setFetchAgain={setFetchAgain}
+              whoseProfile={whoseProfile}
+            >
+              <Tooltip
+                label="Click to update profile picture"
+                display={whoseProfile ? "block" : "none"}
+              >
+                <Image
+                  borderRadius="50%"
+                  boxSize="150px"
+                  src={user.pic}
+                  alt={user.name}
+                  marginBottom="1.5rem"
+                  cursor={whoseProfile ? "pointer" : "default"}
+                />
+              </Tooltip>
+            </UpdateProfilePicture>
             <Text
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
