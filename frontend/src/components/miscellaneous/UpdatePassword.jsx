@@ -11,6 +11,8 @@ import {
   Input,
   FormControl,
   FormLabel,
+  InputRightElement,
+  InputGroup,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -21,6 +23,9 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
   const [newPassword, setNewPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => setShow(!show);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -94,29 +99,51 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
           <ModalBody>
             <FormControl>
               <FormLabel>Current Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="Current Password"
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                mb="1rem"
-              />
+              <InputGroup>
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="Current Password"
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  mb="1rem"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
             <FormControl>
               <FormLabel>New Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="New Password"
-                onChange={(e) => setNewPassword(e.target.value)}
-                mb="1rem"
-              />
+              <InputGroup>
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="New Password"
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  mb="1rem"
+                />
+
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
             <FormControl>
               <FormLabel>Confirm New Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="Confirm New Password"
-                onChange={(e) => setRepeatNewPassword(e.target.value)}
-              />
+              <InputGroup>
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="Confirm New Password"
+                  onChange={(e) => setRepeatNewPassword(e.target.value)}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
           </ModalBody>
 
