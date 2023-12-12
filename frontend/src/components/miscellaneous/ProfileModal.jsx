@@ -15,6 +15,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import UpdateProfilePicture from "./UpdateProfilePicture";
+import UpdatePassword from "./UpdatePassword";
 
 const ProfileModal = ({
   user,
@@ -80,7 +81,17 @@ const ProfileModal = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            {whoseProfile ? (
+              <UpdatePassword user={user} whoseProfile={whoseProfile}>
+                <Button colorScheme="blue" mr={2}>
+                  {" "}
+                  Update Password{" "}
+                </Button>
+              </UpdatePassword>
+            ) : (
+              <> </>
+            )}
+            <Button colorScheme="red" mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>

@@ -92,4 +92,40 @@ const updateProfilePic = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser, allUsers, updateProfilePic };
+const updatePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword) {
+    res.status(400);
+    throw new Error("Please enter your old password");
+  }
+
+  if (!newPassword) {
+    res.status(400);
+    throw new Error("Please enter your new password");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (await user.matchPassword(currentPassword)) {
+      user.password = newPassword;
+      await user.save();
+      res.send({ message: "Password updated" });
+    } else {
+      res.status(401);
+      throw new Error("Invalid password");
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+module.exports = {
+  registerUser,
+  authUser,
+  allUsers,
+  updateProfilePic,
+  updatePassword,
+};
