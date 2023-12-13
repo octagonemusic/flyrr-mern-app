@@ -24,7 +24,7 @@ const Homepage = () => {
   }, [navigate]);
 
   return (
-    <Container maxW="xl" centerContent backgroundColor={"#1E1E2E"}>
+    <Container maxW="xl" centerContent>
         <Text textAlign={"center"} fontWeight={"extrabold"} fontSize="50px" fontFamily="Montserrat" textColor={"#E5E5E5"} m="20px 0 0 0">
           FLYRR
         </Text>
@@ -38,6 +38,8 @@ const Homepage = () => {
         m="40px 0 15px 0"
         borderRadius="2rem"
         borderWidth="1px"
+        borderColor={"#313244"}
+
       >
         <Tabs variant="soft-rounded" colorScheme="purple">
           <TabList>
