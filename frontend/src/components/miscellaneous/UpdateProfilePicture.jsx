@@ -164,7 +164,7 @@ const UpdateProfilePicture = ({
                 borderRadius={50}
                 accept="image/*"
                 textColor={"#FFFFFF"}
-                padding="0.34rem 0.8rem"
+                padding="0.5rem 0.8rem"
                 mb={"0.6"}
                 onChange={(e) => {
                   postDetails(e.target.files[0]);
