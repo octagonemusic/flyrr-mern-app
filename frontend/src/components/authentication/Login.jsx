@@ -78,7 +78,7 @@ const Signup = () => {
   return (
     <VStack spacing="5px" color="white">
       <FormControl id="email" isRequired>
-        <FormLabel fontWeight={"extrabold"} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"}>Email</FormLabel>
+        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={"0.5"}>Email</FormLabel>
         <Input
           bg={"#FFFFFF"}
           fontWeight={"light"}
@@ -88,11 +88,12 @@ const Signup = () => {
           type="email"
           placeholder="Enter your e-mail"
           onChange={(e) => setEmail(e.target.value)}
+          mb={"1rem"}
         />
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel fontWeight={"extrabold"} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"}>Password</FormLabel>
+        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={0.5}>Password</FormLabel>
         <InputGroup>
           <Input
             bg={"#FFFFFF"}
@@ -103,6 +104,7 @@ const Signup = () => {
             type={show ? "text" : "password"}
             placeholder="Enter your Password"
             onChange={(e) => setPassword(e.target.value)}
+            mb={"1rem"}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size={"sm"} fontFamily={"Montserrat"} borderRadius={50} onClick={handleClick} bgColor={"#FFFFFF"}>

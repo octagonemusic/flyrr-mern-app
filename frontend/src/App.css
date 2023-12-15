@@ -2,7 +2,6 @@
 
 .App {
   background-color: #1E1E2E;
-  min-height: max-content;
   display: flex;
 }
 
@@ -12,4 +11,28 @@
   display: flex;
 }
 
+input[type="file"]::file-selector-button {
+  background-color: #CBA6F7;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 0.3rem;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.logincontainer::-webkit-scrollbar {
+  display: none;
+}
+
+.logincontainer {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+.sendmessages:hover{
+  background-color: #1E1E2E;
+}
 

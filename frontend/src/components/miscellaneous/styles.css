@@ -3,3 +3,17 @@
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
+
+.scroll-feed::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-feed::-webkit-scrollbar-track {
+  background: #1E1E2E;
+}
+
+.scroll-feed::-webkit-scrollbar-thumb {
+  background-color: #313244;
+  border-radius: 20px;
+  border: 3px solid #1E1E2E;
+}

@@ -31,15 +31,17 @@ const ProfileModal = ({
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton d={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} />
+        <IconButton d={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} bg={"#CBA6F7"} borderRadius={50} />
       )}
 
       <Modal size="lg" isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={"#313244"}>
           <ModalHeader
-            fontSize="40px"
-            fontFamily="Work sans"
+            fontFamily={"Montserrat"}
+            color={"#FFFFFF"}
+            fontWeight={"light"}
+            fontSize={"40px"}
             d="flex"
             justifyContent="center"
           >
@@ -73,8 +75,9 @@ const ProfileModal = ({
               </Tooltip>
             </UpdateProfilePicture>
             <Text
-              fontSize={{ base: "28px", md: "30px" }}
-              fontFamily="Work sans"
+              color={"#FFFFFF"}
+              fontSize={{ base: "30px", md: "25px" }}
+              fontFamily="Montserrat"
             >
               Email: {user.email}
             </Text>
@@ -83,7 +86,7 @@ const ProfileModal = ({
           <ModalFooter>
             {whoseProfile ? (
               <UpdatePassword user={user} whoseProfile={whoseProfile}>
-                <Button colorScheme="blue" mr={2}>
+                <Button bg={"#CBA6F7"} mr={2} borderRadius={50}>
                   {" "}
                   Update Password{" "}
                 </Button>
@@ -91,7 +94,7 @@ const ProfileModal = ({
             ) : (
               <> </>
             )}
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button colorScheme="red" mr={3} onClick={onClose} borderRadius={50}>
               Close
             </Button>
           </ModalFooter>

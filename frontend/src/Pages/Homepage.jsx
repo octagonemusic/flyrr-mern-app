@@ -24,7 +24,7 @@ const Homepage = () => {
   }, [navigate]);
 
   return (
-    <Container maxW="xl" centerContent>
+    <Container maxW="xl" centerContent className="logincontainer">
         <Text textAlign={"center"} fontWeight={"extrabold"} fontSize="50px" fontFamily="Montserrat" textColor={"#E5E5E5"} m="20px 0 0 0">
           FLYRR
         </Text>
