@@ -136,7 +136,9 @@ const Signup = () => {
   return (
     <VStack spacing="5px" color="black">
       <FormControl id="name" isRequired>
-        <FormLabel textColor={"#E5E5E5"} mb={0.5}>Name</FormLabel>
+        <FormLabel textColor={"#E5E5E5"} mb={0.5}>
+          Name
+        </FormLabel>
         <Input
           backgroundColor={"#ffffff"}
           borderRadius={50}
@@ -147,7 +149,9 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="email" isRequired>
-        <FormLabel textColor={"#E5E5E5"} mb={0.5}>Email</FormLabel>
+        <FormLabel textColor={"#E5E5E5"} mb={0.5}>
+          Email
+        </FormLabel>
         <Input
           backgroundColor={"#ffffff"}
           borderRadius={50}
@@ -159,7 +163,9 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel textColor={"#E5E5E5"} mb={0.5}>Password</FormLabel>
+        <FormLabel textColor={"#E5E5E5"} mb={0.5}>
+          Password
+        </FormLabel>
         <InputGroup>
           <Input
             backgroundColor={"#ffffff"}
@@ -170,7 +176,13 @@ const Signup = () => {
             mb={"0.6rem"}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size={"sm"} onClick={handleClick} borderRadius={50} bg={"#FFFFFF"}>
+            <Button
+              h="1.75rem"
+              size={"sm"}
+              onClick={handleClick}
+              borderRadius={50}
+              bg={"#FFFFFF"}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -178,7 +190,9 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel textColor={"#E5E5E5"} mb={0.5}>Confirm Password</FormLabel>
+        <FormLabel textColor={"#E5E5E5"} mb={0.5}>
+          Confirm Password
+        </FormLabel>
         <InputGroup size="md">
           <Input
             backgroundColor={"#ffffff"}
@@ -189,7 +203,13 @@ const Signup = () => {
             mb={"0.6rem"}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size={"sm"} onClick={handleClick} borderRadius={50} bg={"#FFFFFF"}>
+            <Button
+              h="1.75rem"
+              size={"sm"}
+              onClick={handleClick}
+              borderRadius={50}
+              bg={"#FFFFFF"}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -197,14 +217,16 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="pic">
-        <FormLabel textColor={"#E5E5E5"} mb={0.5}>Upload your Profile Picture</FormLabel>
+        <FormLabel textColor={"#E5E5E5"} mb={0.5}>
+          Upload your Profile Picture
+        </FormLabel>
         <Input
           backgroundColor={"#ffffff"}
           border="none"
           borderRadius={50}
           type="file"
           size="lg"
-          padding="0.34rem 0.8rem"
+          padding="0.5rem 0.8rem"
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
           mb={"0.6"}

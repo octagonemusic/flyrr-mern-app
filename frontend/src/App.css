@@ -17,6 +17,9 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
   border-radius: 50px;
   padding: 0.3rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  font-family: "Montserrat", sans-serif;
 }
 
 * {
