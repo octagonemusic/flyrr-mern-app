@@ -10,7 +10,7 @@ const Chatpage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", minHeight: "100vh", maxHeight: "100vh", overflow: "hidden"}}>
       {user && (
         <SideDrawer fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       )}

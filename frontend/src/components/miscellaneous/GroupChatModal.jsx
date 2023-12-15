@@ -138,10 +138,11 @@ const GroupChatModal = ({ children }) => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent display="flex">
+        <ModalContent display="flex" bg = {"#1E1E2E"}>
           <ModalHeader
+            textColor={"#FFFFFF"}
             fontSize="28px"
-            fontFamily="Work sans"
+            fontFamily="Montserrat"
             display="flex"
             justifyContent="center"
           >
@@ -151,6 +152,8 @@ const GroupChatModal = ({ children }) => {
           <ModalBody display="flex" flexDir="column" alignItems="center">
             <FormControl>
               <Input
+                borderRadius={50}
+                textColor={"#FFFFFF"}
                 placeholder="Chat Name"
                 mb={3}
                 onChange={(e) => {
@@ -160,6 +163,8 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
+                borderRadius={50}
+                textColor={"#FFFFFF"}
                 placeholder="Add Users"
                 mb={3}
                 onChange={(e) => {
@@ -192,7 +197,7 @@ const GroupChatModal = ({ children }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" onClick={handleSubmit}>
+            <Button bg={"#CBA6F7"} borderRadius={50} onClick={handleSubmit}>
               Create Chat
             </Button>
           </ModalFooter>

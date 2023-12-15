@@ -37,22 +37,23 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
 
-  return (
+  return (  
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
-      bg="white"
+      bg="#313244"
       w={{ base: "100%", md: "33%" }}
       borderRadius="lg"
-      borderWidth="1px"
+      borderWidth="none"
     >
       <Box
         pb="3"
         px="3"
         fontSize={{ base: "20px", md: "22px" }}
-        fontFamily="Work sans"
+        fontFamily="Montserrat"
+        textColor={"#FFFFFF"}
         display="flex"
         width="100%"
         justifyContent="space-between"
@@ -61,7 +62,9 @@ const MyChats = ({ fetchAgain }) => {
         My Chats
         <GroupChatModal>
           <Button
+            borderRadius={50}
             display="flex"
+            bg="#CBA6F7"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
             overflow="hidden"
@@ -70,12 +73,11 @@ const MyChats = ({ fetchAgain }) => {
           </Button>
         </GroupChatModal>
       </Box>
-
       <Box
         display="flex"
         flexDir="column"
         p={3}
-        bg="#F8F8F8"
+        bg="#1E1E2E"
         w="100%"
         h="100%"
         borderRadius="lg"
@@ -88,11 +90,11 @@ const MyChats = ({ fetchAgain }) => {
                 <Box
                   onClick={() => setSelectedChat(chat)}
                   cursor="pointer"
-                  bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                  color={selectedChat === chat ? "white" : "black"}
+                  bg={selectedChat === chat ? "#CBA6F7" : "#24273A"}
+                  color={selectedChat === chat ? "black" : "white"}
                   px={3}
                   py={2}
-                  borderRadius="lg"
+                  borderRadius="50"
                   key={chat._id}
                 >
                   <Text>
@@ -106,11 +108,12 @@ const MyChats = ({ fetchAgain }) => {
                 </Box>
               );
             })}
-          </Stack>
+          </Stack> 
         ) : (
           <ChatLoading />
         )}
-      </Box>
+        
+      </Box> 
     </Box>
   );
 };

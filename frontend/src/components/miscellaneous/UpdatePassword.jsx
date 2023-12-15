@@ -93,30 +93,38 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
       )}
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Update Password</ModalHeader>
+        <ModalContent bg={"#1E1E2E"}>
+          <ModalHeader textColor={"#FFFFFF"}>Update Password</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
-              <FormLabel>Current Password</FormLabel>
+              <FormLabel  textColor={"#FFFFFF"}>Current Password</FormLabel>
               <InputGroup>
                 <Input
+                  borderColor={"#313244"}
+                  bg={"#313244"}
+                  borderRadius={50}
+                  textColor={"#FFFFFF"}
                   type={show ? "text" : "password"}
                   placeholder="Current Password"
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   mb="1rem"
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick} borderRadius={50} bg={"#CBA6F7"} paddingRight={"0.5rem"}>
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
             </FormControl>
             <FormControl>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel  textColor={"#FFFFFF"}>New Password</FormLabel>
               <InputGroup>
                 <Input
+                  borderColor={"#313244"}
+                  bg={"#313244"}
+                  borderRadius={50}
+                  textColor={"#FFFFFF"}
                   type={show ? "text" : "password"}
                   placeholder="New Password"
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -124,22 +132,25 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
                 />
 
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick} borderRadius={50} bg={"#CBA6F7"} paddingRight={"0.5rem"}>
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
             </FormControl>
             <FormControl>
-              <FormLabel>Confirm New Password</FormLabel>
+              <FormLabel  textColor={"#FFFFFF"}>Confirm New Password</FormLabel>
               <InputGroup>
                 <Input
+                  borderColor={"#313244"}
+                  bg={"#313244"}
+                  borderRadius={50}
                   type={show ? "text" : "password"}
                   placeholder="Confirm New Password"
                   onChange={(e) => setRepeatNewPassword(e.target.value)}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+                  <Button h="1.75rem" size={"sm"} onClick={handleClick}  borderRadius={50} bg={"#CBA6F7"} paddingRight={"0.5rem"} >
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
@@ -149,7 +160,8 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
 
           <ModalFooter>
             <Button
-              colorScheme="blue"
+              bg={"#CBA6F7"}
+              borderRadius={50}
               mr={3}
               onClick={() => {
                 updatePassword();
@@ -158,7 +170,7 @@ const UpdatePassword = ({ user, whoseProfile, children }) => {
             >
               Update Password
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="ghost" onClick={onClose} bg={"#e78284"} borderRadius={50}>
               Cancel
             </Button>
           </ModalFooter>

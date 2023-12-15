@@ -144,16 +144,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             pb={3}
             px={2}
             width="100%"
-            fontFamily="Work sans"
+            fontFamily="Montserrat"
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
+              borderRadius={50}
+              bg={"#CBA6F7"}
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+
             {!selectedChat.isGroupChat ? (
               <>
                 {getSender(user, selectedChat.users)}
@@ -177,11 +180,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
-            w="100%"
-            h="100%"
+            bg={"#1E1E2E"}
+            w="98%"
+            pt="20rem"
+            height={"88%"}
+            margin="0rem"
             borderRadius="lg"
-            overflowY="hidden"
+            overflowY="hidden"  
           >
             {loading ? (
               <Spinner
@@ -199,9 +204,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
               <Input
+                borderColor={"#313244"}
+                className="sendmessages"
+                borderRadius={50}
+                textcolor={"#FFFFFF"}
                 variant="filled"
-                bg="#E0E0E0"
+                bg="#313244"
                 placeholder="Send A Message"
+                _hover={{
+                  background: "#313244",
+                }}
                 onChange={typingHandler}
                 value={newMessage}
               />
@@ -215,7 +227,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           justifyContent="center"
           height="100%"
         >
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+          <Text fontSize="3xl" pb={3} fontFamily="Montserrat">
             Click on a user to start chatting.
           </Text>
         </Box>

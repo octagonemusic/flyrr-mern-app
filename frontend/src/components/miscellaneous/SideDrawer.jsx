@@ -16,6 +16,7 @@ import {
   Input,
   useToast,
   Spinner,
+  Center,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -27,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { getSender } from "../../config/ChatLogics";
+import { color } from "framer-motion";
 
 const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
   const [search, setSearch] = useState("");
@@ -123,29 +125,30 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
   return (
     <>
       <Box
+        fontFamily={"Montserrat"}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg="#313244"
         width="100%"
-        padding="5px 10px 5px 10px"
-        borderWidth="5px"
+        padding={1.5}
+        borderWidth="none"
       >
-        <Tooltip label="Search For Users!" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+        <Tooltip label="Search For Users!" hasArrow placement="bottom-end" fontFamily={"Montserrat"}>
+          <Button variant="ghost" onClick={onOpen} bg={"#CBA6F7"} borderRadius={50}>
             <i className="fa-solid fa-magnifying-glass"></i>
             <Text display={{ base: "none", md: "flex" }} paddingX="1.5rem">
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
-          Flyrr
+        <Text fontFamily={"Montserrat"} fontSize={"2rem"} color={"#FFFFFF"}>
+          FLYRR
         </Text>
         <div>
           <Menu>
             <MenuButton p={1}>
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="2xl" m={1} color={"#FFFFFF"} />
               {notification.length != 0 && (
                 <Box
                   as={"span"}
@@ -163,7 +166,7 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 </Box>
               )}
             </MenuButton>
-            <MenuList pl="2" pr="2">
+            <MenuList pl="2" pr="2" bg={"#1E1E2E"} borderRadius={50} textColor={"#FFFFFF"} borderColor={"#1E1E2E"} textAlign={"Center"}>
               {!notification.length && "No new messages."}
               {notification.map((notif, i) => (
                 <MenuItem
@@ -180,8 +183,8 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
               ))}
             </MenuList>
           </Menu>
-          <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+          <Menu bg={"#1E1E2E"}>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg={"#CBA6F7"} borderRadius={50}>
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -189,34 +192,37 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 src={user.pic}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList bg={"#1E1E2E"}>
               <ProfileModal
                 user={user}
                 fetchAgain={fetchAgain}
                 setFetchAgain={setFetchAgain}
                 whoseProfile={true}
               >
-                <MenuItem>My Profile</MenuItem>
+                <MenuItem  bg={"#313244"} textColor={"#FFFFFF"}>My Profile</MenuItem>
               </ProfileModal>
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem  bg={"#313244"} textColor={"#FFFFFF"} onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>
       </Box>
 
-      <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
+      <Drawer placement="left" isOpen={isOpen} onClose={onClose} bg={"#1E1E2E"}>
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
+        <DrawerContent bg={"#1E1E2E"}>
+          <DrawerHeader textColor={"#FFFFFF"} bg={"#313244"}>Search Users</DrawerHeader>
           <DrawerBody>
-            <Box display="flex" paddingBottom="2">
-              <Input
+            <Box display="flex" paddingBottom="3" paddingTop="3" borderColor={"#313244"}>
+              <Input 
+                borderRadius={50}
+                bg={"#313244"}
+                textColor={"#FFFFFF"}
                 placeholder="Search by Name or Email"
                 marginRight="2"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button onClick={handleSearch} borderRadius={50} bg={"#CBA6F7"}>Go</Button>
             </Box>
             {loading ? (
               <ChatLoading />

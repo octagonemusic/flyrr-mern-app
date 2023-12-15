@@ -76,26 +76,38 @@ const Signup = () => {
   };
 
   return (
-    <VStack spacing="5px" color="black">
+    <VStack spacing="5px" color="white">
       <FormControl id="email" isRequired>
-        <FormLabel>Email</FormLabel>
+        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={"0.5"}>Email</FormLabel>
         <Input
+          bg={"#FFFFFF"}
+          fontWeight={"light"}
+          fontFamily={"Montserrat"}
+          borderRadius={50}
+          textColor={"#000000"}
           type="email"
           placeholder="Enter your e-mail"
           onChange={(e) => setEmail(e.target.value)}
+          mb={"1rem"}
         />
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
+        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={0.5}>Password</FormLabel>
         <InputGroup>
           <Input
+            bg={"#FFFFFF"}
+            fontWeight={"light"}
+            fontFamily={"Montserrat"}
+            borderRadius={50}
+            textColor={"#000000"}
             type={show ? "text" : "password"}
             placeholder="Enter your Password"
             onChange={(e) => setPassword(e.target.value)}
+            mb={"1rem"}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size={"sm"} onClick={handleClick}>
+            <Button h="1.75rem" size={"sm"} fontFamily={"Montserrat"} borderRadius={50} onClick={handleClick} bgColor={"#FFFFFF"}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -103,8 +115,10 @@ const Signup = () => {
       </FormControl>
 
       <Button
-        colorScheme="green"
-        width="100%"
+        fontFamily={"Montserrat"}
+        borderRadius={50}
+        bg={"#CBA6F7"}
+        width="60%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}

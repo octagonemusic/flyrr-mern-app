@@ -1,6 +1,38 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 
 .App {
+  background-color: #1E1E2E;
+  display: flex;
+}
+
+#root {
+  background-color: #1E1E2E;
   min-height: 100vh;
   display: flex;
 }
+
+input[type="file"]::file-selector-button {
+  background-color: #CBA6F7;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 0.3rem;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+.logincontainer::-webkit-scrollbar {
+  display: none;
+}
+
+.logincontainer {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+.sendmessages:hover{
+  background-color: #1E1E2E;
+}
+

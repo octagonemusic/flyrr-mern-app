@@ -201,6 +201,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   return (
     <>
       <IconButton
+        bg={"#CBA6F7"}
+        borderRadius={50}
         display={{ base: "flex" }}
         icon={<ViewIcon />}
         onClick={onOpen}
@@ -208,10 +210,11 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={"#1E1E2E"}>
           <ModalHeader
+            color={"#FFFFFF"}
             fontSize="30px"
-            fontFamily="Work sans"
+            fontFamily={"Montserrat"}
             display="flex"
             justifyContent="center"
           >
@@ -230,6 +233,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             </Box>
             <FormControl display="flex">
               <Input
+                borderColor={"#313244"}
+                textColor={"#FFFFFF"}
+                bg={"#313244"}
+                borderRadius={50}
                 placeholder="Chat Name"
                 mb={3}
                 value={groupChatName}
@@ -237,7 +244,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
               />
               <Button
                 varian="solid"
-                colorScheme="teal"
+                bg={"#CBA6F7"}
+                borderRadius={50}
                 ml={1}
                 isLoading={renameLoading}
                 onClick={handleRename}
@@ -247,6 +255,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             </FormControl>
             <FormControl display="flex">
               <Input
+                borderColor={"#313244"}
+                textColor={"#FFFFFF"}
+                bg={"#313244"}
+                borderRadius={50}
                 placeholder="Add user to group"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
@@ -267,6 +279,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
           <ModalFooter>
             <Button
+              borderRadius={50}
               colorScheme="red"
               onClick={() => {
                 handleRemove(user);
