@@ -217,7 +217,7 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 src={user.pic}
               />
             </MenuButton>
-            <MenuList bg={"#1E1E2E"}>
+            <MenuList bg={"#1E1E2E"} border={"none"}>
               <ProfileModal
                 user={user}
                 fetchAgain={fetchAgain}
