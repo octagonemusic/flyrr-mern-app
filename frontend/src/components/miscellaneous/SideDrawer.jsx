@@ -131,11 +131,21 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
         alignItems="center"
         bg="#313244"
         width="100%"
-        padding={1.5}
+        padding={"0.5rem"}
         borderWidth="none"
       >
-        <Tooltip label="Search For Users!" hasArrow placement="bottom-end" fontFamily={"Montserrat"}>
-          <Button variant="ghost" onClick={onOpen} bg={"#CBA6F7"} borderRadius={50}>
+        <Tooltip
+          label="Search For Users!"
+          hasArrow
+          placement="bottom-end"
+          fontFamily={"Montserrat"}
+        >
+          <Button
+            variant="ghost"
+            onClick={onOpen}
+            bg={"#CBA6F7"}
+            borderRadius={50}
+          >
             <i className="fa-solid fa-magnifying-glass"></i>
             <Text display={{ base: "none", md: "flex" }} paddingX="1.5rem">
               Search User
@@ -166,11 +176,21 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 </Box>
               )}
             </MenuButton>
-            <MenuList pl="2" pr="2" bg={"#1E1E2E"} borderRadius={50} textColor={"#FFFFFF"} borderColor={"#1E1E2E"} textAlign={"Center"}>
+            <MenuList
+              pl="2"
+              pr="2"
+              bg={"#1E1E2E"}
+              borderRadius={50}
+              textColor={"#FFFFFF"}
+              borderColor={"#1E1E2E"}
+              textAlign={"Center"}
+            >
               {!notification.length && "No new messages."}
               {notification.map((notif, i) => (
                 <MenuItem
                   key={i}
+                  bg={"#1E1E2E"}
+                  textColor={"#FFFFFF"}
                   onClick={() => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));
@@ -184,7 +204,12 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
             </MenuList>
           </Menu>
           <Menu bg={"#1E1E2E"}>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} bg={"#CBA6F7"} borderRadius={50}>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              bg={"#CBA6F7"}
+              borderRadius={50}
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -199,9 +224,17 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 setFetchAgain={setFetchAgain}
                 whoseProfile={true}
               >
-                <MenuItem  bg={"#313244"} textColor={"#FFFFFF"}>My Profile</MenuItem>
+                <MenuItem bg={"#1E1E2E"} textColor={"#FFFFFF"}>
+                  My Profile
+                </MenuItem>
               </ProfileModal>
-              <MenuItem  bg={"#313244"} textColor={"#FFFFFF"} onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem
+                bg={"#1E1E2E"}
+                textColor={"#FFFFFF"}
+                onClick={logoutHandler}
+              >
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </div>
@@ -210,10 +243,17 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
       <Drawer placement="left" isOpen={isOpen} onClose={onClose} bg={"#1E1E2E"}>
         <DrawerOverlay />
         <DrawerContent bg={"#1E1E2E"}>
-          <DrawerHeader textColor={"#FFFFFF"} bg={"#313244"}>Search Users</DrawerHeader>
+          <DrawerHeader textColor={"#FFFFFF"} bg={"#313244"}>
+            Search Users
+          </DrawerHeader>
           <DrawerBody>
-            <Box display="flex" paddingBottom="3" paddingTop="3" borderColor={"#313244"}>
-              <Input 
+            <Box
+              display="flex"
+              paddingBottom="3"
+              paddingTop="3"
+              borderColor={"#313244"}
+            >
+              <Input
                 borderRadius={50}
                 bg={"#313244"}
                 textColor={"#FFFFFF"}
@@ -222,7 +262,9 @@ const SideDrawer = ({ fetchAgain, setFetchAgain }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button onClick={handleSearch} borderRadius={50} bg={"#CBA6F7"}>Go</Button>
+              <Button onClick={handleSearch} borderRadius={50} bg={"#CBA6F7"}>
+                Go
+              </Button>
             </Box>
             {loading ? (
               <ChatLoading />

@@ -23,7 +23,12 @@ const ScrollableChat = ({ messages }) => {
   }, [messages.length]);
 
   return (
-    <div className="scroll-feed">
+    <div
+      className="scroll-feed"
+      style={{
+        paddingTop: "1rem",
+      }}
+    >
       {messages &&
         messages.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
@@ -31,7 +36,7 @@ const ScrollableChat = ({ messages }) => {
               isLastMessage(messages, i, user._id)) && (
               <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
                 <Avatar
-                  mt="7px"
+                  mt="0.5rem"
                   mr={1}
                   size="sm"
                   cursor="pointer"
@@ -43,9 +48,7 @@ const ScrollableChat = ({ messages }) => {
 
             <span
               style={{
-                color: `${
-                  m.sender._id === user._id ? "#1E1E2E" : "#FFFFFF"
-                }`,
+                color: `${m.sender._id === user._id ? "#1E1E2E" : "#FFFFFF"}`,
                 backgroundColor: `${
                   m.sender._id === user._id ? "#CBA6F7" : "#313244"
                 }`,
@@ -54,6 +57,7 @@ const ScrollableChat = ({ messages }) => {
                 maxWidth: "70%",
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
+                marginBottom: 0,
               }}
             >
               {m.content}

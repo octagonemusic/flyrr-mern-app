@@ -141,8 +141,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         <>
           <Text
             fontSize={{ base: "28px", md: "30px" }}
-            pb={3}
-            px={2}
+            pb={"0.5rem"}
+            px={"0.8rem"}
+            mt="0"
+            pt="0"
             width="100%"
             fontFamily="Montserrat"
             display="flex"
@@ -181,12 +183,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             justifyContent="flex-end"
             p={3}
             bg={"#1E1E2E"}
-            w="98%"
-            pt="20rem"
-            height={"88%"}
+            w="97%"
+            h="88%"
             margin="0rem"
             borderRadius="lg"
-            overflowY="hidden"  
+            overflowY="hidden"
           >
             {loading ? (
               <Spinner

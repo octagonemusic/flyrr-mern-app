@@ -31,12 +31,18 @@ const ProfileModal = ({
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton d={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} bg={"#CBA6F7"} borderRadius={50} />
+        <IconButton
+          d={{ base: "flex" }}
+          icon={<ViewIcon />}
+          onClick={onOpen}
+          bg={"#CBA6F7"}
+          borderRadius={50}
+        />
       )}
 
       <Modal size="lg" isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg={"#313244"}>
+        <ModalContent bg={"#1E1E2E"}>
           <ModalHeader
             fontFamily={"Montserrat"}
             color={"#FFFFFF"}
@@ -94,7 +100,12 @@ const ProfileModal = ({
             ) : (
               <> </>
             )}
-            <Button colorScheme="red" mr={3} onClick={onClose} borderRadius={50}>
+            <Button
+              colorScheme="red"
+              mr={3}
+              onClick={onClose}
+              borderRadius={50}
+            >
               Close
             </Button>
           </ModalFooter>
