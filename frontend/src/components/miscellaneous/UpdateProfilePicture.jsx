@@ -39,6 +39,7 @@ const UpdateProfilePicture = ({
         isClosable: true,
         position: "bottom",
       });
+      setLoading(false);
       return;
     }
 
@@ -136,16 +137,17 @@ const UpdateProfilePicture = ({
 
       <Modal size="lg" isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={"#1E1E2E"}>
           <ModalHeader
             fontSize="40px"
-            fontFamily="Work sans"
+            fontFamily="Montserrat"
             d="flex"
             justifyContent="center"
+            textColor={"#FFFFFF"}
           >
             Update your profile picture
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton color="#fff" />
           <ModalBody
             display="flex"
             flexDir="column"
@@ -153,11 +155,17 @@ const UpdateProfilePicture = ({
             justifyContent="center"
           >
             <FormControl id="pic">
-              <FormLabel>Upload your Profile Picture</FormLabel>
+              <FormLabel textColor={"#FFFFFF"}>
+                Upload your Profile Picture
+              </FormLabel>
               <Input
                 type="file"
-                p="1.5"
+                size="lg"
+                borderRadius={50}
                 accept="image/*"
+                textColor={"#FFFFFF"}
+                padding="0.34rem 0.8rem"
+                mb={"0.6"}
                 onChange={(e) => {
                   postDetails(e.target.files[0]);
                   setChanged(true);
@@ -168,10 +176,11 @@ const UpdateProfilePicture = ({
 
           <ModalFooter>
             <Button
-              colorScheme="blue"
               mr={3}
               onClick={handleUpdateProfilePicture}
               isLoading={loading}
+              bg={"#CBA6F7"}
+              borderRadius={50}
             >
               Update
             </Button>

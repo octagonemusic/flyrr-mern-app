@@ -6,6 +6,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../../config/ChatLogics";
 import GroupChatModal from "./GroupChatModal";
+import "./styles.css";
 
 const MyChats = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -37,12 +38,12 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
 
-  return (  
+  return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
-      p={3}
+      p={"0.8rem"}
       bg="#313244"
       w={{ base: "100%", md: "33%" }}
       borderRadius="lg"
@@ -82,6 +83,7 @@ const MyChats = ({ fetchAgain }) => {
         h="100%"
         borderRadius="lg"
         overflowY="hidden"
+        className="mychats-scroll"
       >
         {chats ? (
           <Stack overflowY="scroll">
@@ -108,12 +110,11 @@ const MyChats = ({ fetchAgain }) => {
                 </Box>
               );
             })}
-          </Stack> 
+          </Stack>
         ) : (
           <ChatLoading />
         )}
-        
-      </Box> 
+      </Box>
     </Box>
   );
 };

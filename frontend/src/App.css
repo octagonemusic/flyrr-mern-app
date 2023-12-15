@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 
 .App {
-  background-color: #1E1E2E;
+  background-color: #1e1e2e;
   display: flex;
 }
 
 #root {
-  background-color: #1E1E2E;
+  background-color: #1e1e2e;
   min-height: 100vh;
   display: flex;
 }
 
 input[type="file"]::file-selector-button {
-  background-color: #CBA6F7;
+  background-color: #cba6f7;
   border: none;
   cursor: pointer;
   border-radius: 50px;
@@ -28,11 +28,27 @@ input[type="file"]::file-selector-button {
 }
 
 .logincontainer {
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-.sendmessages:hover{
-  background-color: #1E1E2E;
+.sendmessages:hover {
+  background-color: #1e1e2e;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #313244;
+  border-radius: 20px;
+  border: 3px solid #1e1e2e;
+}
