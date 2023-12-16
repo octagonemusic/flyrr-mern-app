@@ -104,6 +104,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
 
         setNewMessage("");
+        setMessages([...messages, { content: newMessage, sender: user }]);
 
         const { data } = await axios.post(
           "/api/message",
@@ -114,8 +115,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
 
+        console.log(data);
+
         socket.emit("new message", data);
-        setMessages([...messages, data]);
+        setFetchAgain(!fetchAgain);
       } catch (error) {
         toast({
           title: "Error",
