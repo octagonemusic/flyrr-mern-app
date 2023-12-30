@@ -21,6 +21,12 @@ const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
+  function isValidEmail(email) {
+    // Define a regular expression pattern for email validation.
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
   const handleClick = () => setShow(!show);
 
   const submitHandler = async () => {
@@ -29,6 +35,18 @@ const Signup = () => {
       toast({
         title: "Error",
         description: "Please fill all the fields",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid email",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -78,7 +96,16 @@ const Signup = () => {
   return (
     <VStack spacing="5px" color="white">
       <FormControl id="email" isRequired>
-        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={"0.5"}>Email</FormLabel>
+        <FormLabel
+          fontWeight={"extrabold"}
+          requiredIndicator={false}
+          fontSize="15px"
+          fontFamily="Montserrat"
+          textColor={"#E5E5E5"}
+          mb={"0.5"}
+        >
+          Email
+        </FormLabel>
         <Input
           bg={"#FFFFFF"}
           fontWeight={"light"}
@@ -93,7 +120,16 @@ const Signup = () => {
       </FormControl>
 
       <FormControl id="password" isRequired>
-        <FormLabel fontWeight={"extrabold"} requiredIndicator={false} fontSize="15px" fontFamily="Montserrat" textColor={"#E5E5E5"} mb={0.5}>Password</FormLabel>
+        <FormLabel
+          fontWeight={"extrabold"}
+          requiredIndicator={false}
+          fontSize="15px"
+          fontFamily="Montserrat"
+          textColor={"#E5E5E5"}
+          mb={0.5}
+        >
+          Password
+        </FormLabel>
         <InputGroup>
           <Input
             bg={"#FFFFFF"}
@@ -107,7 +143,14 @@ const Signup = () => {
             mb={"1rem"}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size={"sm"} fontFamily={"Montserrat"} borderRadius={50} onClick={handleClick} bgColor={"#FFFFFF"}>
+            <Button
+              h="1.75rem"
+              size={"sm"}
+              fontFamily={"Montserrat"}
+              borderRadius={50}
+              onClick={handleClick}
+              bgColor={"#FFFFFF"}
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
