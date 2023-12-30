@@ -25,6 +25,12 @@ const Signup = () => {
 
   const handleClick = () => setShow(!show);
 
+  function isValidEmail(email) {
+    // Define a regular expression pattern for email validation.
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
   const postDetails = (pics) => {
     setLoading(true);
     if (pics == undefined) {
@@ -84,6 +90,18 @@ const Signup = () => {
     if (password != confirmPassword) {
       toast({
         title: "Passwords do not match!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      toast({
+        title: "Please enter a valid email!",
         status: "warning",
         duration: 5000,
         isClosable: true,
