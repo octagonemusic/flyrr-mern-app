@@ -44,31 +44,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     if (!selectedChat) return;
 
     try {
+      setLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       };
 
-      setLoading(true);
-
       const { data } = await axios.get(
         `/api/message/${selectedChat._id}`,
         config
       );
-
       setMessages(data);
       setLoading(false);
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load the messages.",
+        title: "Error Occurred!",
+        description: "Failed to Load the Messages",
         status: "error",
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
-        position: "top",
+        position: "bottom",
       });
+      setLoading(false);
     }
   };
 
@@ -264,9 +263,26 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             borderRadius="lg"
             overflowY="hidden"
           >
-            <div className="messages" style={{ overflowY: "auto", flex: 1 }}>
-              <ScrollableChat messages={messages} />
-            </div>
+            {loading ? (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                height="100%"
+              >
+                <Spinner
+                  size="xl"
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="#313244"
+                  color="#CBA6F7"
+                />
+              </Box>
+            ) : (
+              <div className="messages" style={{ overflowY: "auto", flex: 1 }}>
+                <ScrollableChat messages={messages} />
+              </div>
+            )}
 
             <FormControl isRequired mt={3}>
               <Box display="flex" gap={2}>
