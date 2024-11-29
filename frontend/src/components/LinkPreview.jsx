@@ -6,6 +6,7 @@ import { ChatState } from "../context/ChatProvider";
 const LinkPreview = ({ url, previewData }) => {
   const [preview, setPreview] = useState(previewData);
   const [loading, setLoading] = useState(!previewData);
+  const [imageError, setImageError] = useState(false);
   const { user } = ChatState();
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const LinkPreview = ({ url, previewData }) => {
       transition="background 0.2s"
     >
       <Box display="flex" gap={3}>
-        {preview.images && preview.images[0] && (
+        {preview.images && preview.images[0] && !imageError && (
           <Image
             src={preview.images[0]}
             alt={preview.title || "Link preview"}
@@ -69,6 +70,7 @@ const LinkPreview = ({ url, previewData }) => {
             maxW="80px"
             objectFit="cover"
             borderRadius="md"
+            onError={() => setImageError(true)}
           />
         )}
         <Box flex="1">
