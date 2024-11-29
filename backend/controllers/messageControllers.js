@@ -20,33 +20,8 @@ const sendMessage = asyncHandler(async (req, res) => {
     language: language || "",
   };
 
-  // Check for URLs in the message
-  const urlPattern = /(https?:\/\/[^\s]+)/g;
-  const matches = content.match(urlPattern);
-
-  if (matches && matches[0]) {
-    try {
-      const previewData = await getLinkPreview(matches[0], {
-        timeout: 5000,
-        followRedirects: "follow",
-        headers: {
-          "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
-        },
-      });
-      newMessage.linkPreview = {
-        title: previewData.title,
-        description: previewData.description,
-        images: previewData.images,
-        url: matches[0],
-      };
-    } catch (error) {
-      console.error("Link preview error:", error);
-    }
-  }
-
   try {
     var message = await Message.create(newMessage);
-
     message = await message.populate("sender", "name pic");
     message = await message.populate("chat");
     message = await User.populate(message, {
@@ -57,6 +32,40 @@ const sendMessage = asyncHandler(async (req, res) => {
     await Chat.findByIdAndUpdate(req.body.chatId, {
       latestMessage: message,
     });
+
+    // Fetch preview after sending the message
+    const urlPattern = /(https?:\/\/[^\s]+)/g;
+    const matches = content.match(urlPattern);
+
+    if (matches && matches[0]) {
+      getLinkPreview(matches[0], {
+        timeout: 5000,
+        followRedirects: "follow",
+        headers: {
+          "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
+        },
+      })
+        .then(async (previewData) => {
+          if (
+            previewData &&
+            (previewData.title ||
+              previewData.description ||
+              (previewData.images && previewData.images.length))
+          ) {
+            await Message.findByIdAndUpdate(message._id, {
+              linkPreview: {
+                title: previewData.title,
+                description: previewData.description,
+                images: previewData.images,
+                url: matches[0],
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Link preview error:", error);
+        });
+    }
 
     res.json(message);
   } catch (error) {
