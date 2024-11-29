@@ -2,42 +2,54 @@ import React, { useEffect } from "react";
 import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
 
-// Core and dependencies first
+// Import base components
 import "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
-import "prismjs/components/prism-markup";
-import "prismjs/components/prism-markup-templating";
 
-// Then other languages
+// Import languages individually
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-java";
-import "prismjs/components/prism-jsx";
-import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-cpp";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-json";
-import "prismjs/components/prism-bash";
-import "prismjs/components/prism-c";
-import "prismjs/components/prism-cpp";
-import "prismjs/components/prism-csharp";
-import "prismjs/components/prism-ruby";
-import "prismjs/components/prism-rust";
-import "prismjs/components/prism-sql";
-import "prismjs/components/prism-yaml";
-import "prismjs/components/prism-markdown";
-import "prismjs/components/prism-go";
-import "prismjs/components/prism-kotlin";
-import "prismjs/components/prism-swift";
-import "prismjs/components/prism-php";
 
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
 
+  // Language mapping
+  const getLanguage = (lang) => {
+    const languageMap = {
+      js: "javascript",
+      javascript: "javascript",
+      py: "python",
+      python: "python",
+      java: "java",
+      cpp: "cpp",
+      "c++": "cpp",
+      css: "css",
+      json: "json",
+    };
+    return languageMap[lang?.toLowerCase()] || "plaintext";
+  };
+
   useEffect(() => {
-    Prism.highlightAll();
-  }, [code]);
+    // Ensure the language is loaded
+    const lang = getLanguage(language);
+
+    // Force re-highlight when code or language changes
+    if (code) {
+      setTimeout(() => {
+        const codeElement = document.querySelector(`code.language-${lang}`);
+        if (codeElement) {
+          Prism.highlightElement(codeElement);
+        }
+      }, 0);
+    }
+  }, [code, language]);
+
+  const displayLanguage = getLanguage(language);
 
   return (
     <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
@@ -53,7 +65,7 @@ const CodeBlock = ({ code, language }) => {
           fontFamily="Fira Code, monospace"
           textTransform="lowercase"
         >
-          {language || "plaintext"}
+          {displayLanguage}
         </Text>
         <IconButton
           size="sm"
@@ -99,7 +111,7 @@ const CodeBlock = ({ code, language }) => {
         }}
       >
         <pre>
-          <code className={`language-${language || "plaintext"}`}>{code}</code>
+          <code className={`language-${displayLanguage}`}>{code}</code>
         </pre>
       </Box>
     </Box>
