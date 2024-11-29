@@ -229,7 +229,24 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   onChange={typingHandler}
                   onKeyDown={handleKeyDown}
                   value={newMessage}
+                  minH="40px"
+                  maxH="150px"
+                  resize="none"
+                  overflow="auto"
                   rows={1}
+                  sx={{
+                    "&::-webkit-scrollbar": {
+                      width: "8px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "#1e1e2e",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "#313244",
+                      borderRadius: "4px",
+                    },
+                    resize: "none",
+                  }}
                 />
                 <IconButton
                   icon={<ArrowForwardIcon />}
@@ -239,6 +256,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   _hover={{ bg: "#B4BEFE" }}
                   onClick={(e) => sendMessage({ key: "Enter" })}
                   aria-label="Send message"
+                  alignSelf="flex-end"
+                  h="40px"
                 />
               </Box>
             </FormControl>
