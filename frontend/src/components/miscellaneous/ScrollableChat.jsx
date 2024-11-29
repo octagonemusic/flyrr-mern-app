@@ -52,7 +52,15 @@ const ScrollableChat = ({ messages }) => {
             dangerouslySetInnerHTML={{ __html: content }}
           />
           {matches.map((url, index) => (
-            <LinkPreview key={index} url={url} />
+            <LinkPreview
+              key={index}
+              url={url}
+              previewData={
+                m.linkPreview && m.linkPreview.url === url
+                  ? m.linkPreview
+                  : null
+              }
+            />
           ))}
         </>
       );

@@ -7,6 +7,12 @@ const messageModel = mongoose.Schema(
     chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat" },
     isCode: { type: Boolean, default: false },
     language: { type: String, default: "" },
+    linkPreview: {
+      title: String,
+      description: String,
+      images: [String],
+      url: String,
+    },
   },
   { timestamps: true }
 );

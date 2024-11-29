@@ -3,39 +3,41 @@ import { Box, Image, Text, Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import { ChatState } from "../context/ChatProvider";
 
-const LinkPreview = ({ url }) => {
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(true);
+const LinkPreview = ({ url, previewData }) => {
+  const [preview, setPreview] = useState(previewData);
+  const [loading, setLoading] = useState(!previewData);
   const { user } = ChatState();
 
   useEffect(() => {
-    const fetchPreview = async () => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const { data } = await axios.get(
-          `/api/message/preview?url=${encodeURIComponent(url)}`,
-          config
-        );
-        if (
-          data &&
-          (data.title ||
-            data.description ||
-            (data.images && data.images.length))
-        ) {
-          setPreview(data);
+    if (!previewData) {
+      const fetchPreview = async () => {
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          };
+          const { data } = await axios.get(
+            `/api/message/preview?url=${encodeURIComponent(url)}`,
+            config
+          );
+          if (
+            data &&
+            (data.title ||
+              data.description ||
+              (data.images && data.images.length))
+          ) {
+            setPreview(data);
+          }
+        } catch (error) {
+          console.error("Error fetching link preview:", error);
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        console.error("Error fetching link preview:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPreview();
-  }, [url, user.token]);
+      };
+      fetchPreview();
+    }
+  }, [url, user.token, previewData]);
 
   if (loading) {
     return (
