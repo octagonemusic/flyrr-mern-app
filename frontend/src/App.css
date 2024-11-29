@@ -22,6 +22,20 @@ input[type="file"]::file-selector-button {
   font-family: "Montserrat", sans-serif;
 }
 
+/* Override the global font for code blocks */
+.code-block-container *,
+.code-block-container pre,
+.code-block-container code,
+.code-block-container span {
+  font-family: "Fira Code", monospace !important;
+  font-size: 0.9em !important;
+}
+
+/* Move this before the * selector to prevent override */
+.code-block-container {
+  font-family: "Fira Code", monospace !important;
+}
+
 * {
   font-family: "Montserrat", sans-serif;
 }

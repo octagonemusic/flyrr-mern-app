@@ -45,10 +45,10 @@ const CodeBlock = ({ code, language }) => {
         />
       </Box>
       <Box
+        className="code-block-container"
         overflowX="auto"
-        fontFamily="Fira Code, monospace !important"
         sx={{
-          "& pre, & code": {
+          "& *": {
             fontFamily: "Fira Code, monospace !important",
           },
           "&::-webkit-scrollbar": {
