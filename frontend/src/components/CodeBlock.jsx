@@ -1,25 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
-
-// Import Prism core and theme
-import Prism from "prismjs";
-import "prismjs/themes/prism.css"; // Base theme
-
-// Import languages
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-javascript";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-cpp";
-import "prismjs/components/prism-css";
-import "prismjs/components/prism-json";
+import hljs from "highlight.js";
+import "highlight.js/styles/tokyo-night-dark.css"; // This theme matches your dark theme
 
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
+  const codeRef = useRef(null);
 
   useEffect(() => {
-    // Highlight all code elements
-    Prism.highlightAll();
+    if (codeRef.current) {
+      hljs.highlightElement(codeRef.current);
+    }
   }, [code, language]);
 
   return (
@@ -52,18 +44,15 @@ const CodeBlock = ({ code, language }) => {
         className="code-block-container"
         overflowX="auto"
         sx={{
-          "& pre, & code": {
+          "& pre": {
             margin: 0,
             padding: 0,
-            background: "transparent",
-            fontSize: "14px !important",
-            fontFamily: "Fira Code, monospace !important",
-            lineHeight: "1.5 !important",
           },
-          "& .token": {
-            fontSize: "inherit !important",
-            fontFamily: "inherit !important",
-            lineHeight: "inherit !important",
+          "& code": {
+            fontFamily: "Fira Code, monospace !important",
+            fontSize: "14px !important",
+            lineHeight: "1.5 !important",
+            background: "transparent !important",
           },
           "::selection, & *::selection": {
             background: "#CBA6F7",
@@ -82,7 +71,9 @@ const CodeBlock = ({ code, language }) => {
         }}
       >
         <pre>
-          <code className={`language-${language || "plaintext"}`}>{code}</code>
+          <code ref={codeRef} className={language || "plaintext"}>
+            {code}
+          </code>
         </pre>
       </Box>
     </Box>
