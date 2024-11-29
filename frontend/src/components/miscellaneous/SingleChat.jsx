@@ -203,8 +203,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             justifyContent="flex-end"
             p={3}
             bg="#1E1E2E"
-            w="100%"
-            h="100%"
+            w="90%"
+            h="95%"
+            padding={3}
             borderRadius="lg"
             overflowY="hidden"
           >
