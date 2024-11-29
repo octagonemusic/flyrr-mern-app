@@ -26,7 +26,7 @@ const ScrollableChat = ({ messages }) => {
     if (m.isCode) {
       return <CodeBlock code={m.content} language={m.language} />;
     }
-    return <span>{m.content}</span>;
+    return <span style={{ whiteSpace: "pre-wrap" }}>{m.content}</span>;
   };
 
   return (
