@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
+
+// Import Prism core and theme
 import Prism from "prismjs";
+import "prismjs/themes/prism.css"; // Base theme
 
-// Import base components
-import "prismjs/components/prism-core";
-import "prismjs/components/prism-clike";
-
-// Import languages individually
-import "prismjs/components/prism-javascript";
+// Import languages
 import "prismjs/components/prism-python";
+import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-cpp";
 import "prismjs/components/prism-css";
@@ -18,38 +17,10 @@ import "prismjs/components/prism-json";
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
 
-  // Language mapping
-  const getLanguage = (lang) => {
-    const languageMap = {
-      js: "javascript",
-      javascript: "javascript",
-      py: "python",
-      python: "python",
-      java: "java",
-      cpp: "cpp",
-      "c++": "cpp",
-      css: "css",
-      json: "json",
-    };
-    return languageMap[lang?.toLowerCase()] || "plaintext";
-  };
-
   useEffect(() => {
-    // Ensure the language is loaded
-    const lang = getLanguage(language);
-
-    // Force re-highlight when code or language changes
-    if (code) {
-      setTimeout(() => {
-        const codeElement = document.querySelector(`code.language-${lang}`);
-        if (codeElement) {
-          Prism.highlightElement(codeElement);
-        }
-      }, 0);
-    }
+    // Highlight all code elements
+    Prism.highlightAll();
   }, [code, language]);
-
-  const displayLanguage = getLanguage(language);
 
   return (
     <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
@@ -65,7 +36,7 @@ const CodeBlock = ({ code, language }) => {
           fontFamily="Fira Code, monospace"
           textTransform="lowercase"
         >
-          {displayLanguage}
+          {language || "plaintext"}
         </Text>
         <IconButton
           size="sm"
@@ -111,7 +82,7 @@ const CodeBlock = ({ code, language }) => {
         }}
       >
         <pre>
-          <code className={`language-${displayLanguage}`}>{code}</code>
+          <code className={`language-${language || "plaintext"}`}>{code}</code>
         </pre>
       </Box>
     </Box>
