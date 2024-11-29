@@ -124,8 +124,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             },
           };
 
-          // Check if message starts and ends with triple backticks
-          const codeBlockRegex = /^```(\w+)?\n([\s\S]*?)```$/;
+          // Updated regex to handle spaces around language specification
+          const codeBlockRegex = /^```\s*(\w+)?\s*\n([\s\S]*?)```$/;
           const match = newMessage.match(codeBlockRegex);
 
           let messageData = {
@@ -140,7 +140,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               content: match[2], // The code content
               chatId: selectedChat,
               isCode: true,
-              language: match[1] || "plaintext", // The language or default to plaintext
+              language: (match[1] || "plaintext").trim(), // Trim any extra spaces from language
             };
           }
 
