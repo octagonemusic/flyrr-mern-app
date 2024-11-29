@@ -55,3 +55,57 @@ input[type="file"]::file-selector-button {
   border-radius: 20px;
   border: 3px solid #1e1e2e;
 }
+
+code {
+  font-family: "Fira Code", monospace !important;
+  font-size: 0.9em;
+}
+
+pre {
+  border-radius: 4px;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6c7086;
+}
+
+.token.punctuation {
+  color: #cdd6f4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #fab387;
+}
+
+.token.selector,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #a6e3a1;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #89b4fa;
+}
+
+.token.keyword {
+  color: #cba6f7;
+}
+
+.token.function {
+  color: #89b4fa;
+}
