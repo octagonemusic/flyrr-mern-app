@@ -21,7 +21,7 @@ const CodeBlock = ({ code, language }) => {
   return (
     <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
       <Box
-        mb={6}
+        mb={3}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -29,7 +29,7 @@ const CodeBlock = ({ code, language }) => {
         <Text
           color="#CBA6F7"
           fontSize="sm"
-          fontFamily="monospace"
+          fontFamily="Fira Code, monospace"
           textTransform="lowercase"
         >
           {language || "plaintext"}
@@ -46,7 +46,11 @@ const CodeBlock = ({ code, language }) => {
       </Box>
       <Box
         overflowX="auto"
+        fontFamily="Fira Code, monospace !important"
         sx={{
+          "& pre, & code": {
+            fontFamily: "Fira Code, monospace !important",
+          },
           "&::-webkit-scrollbar": {
             height: "8px",
           },

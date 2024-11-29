@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Fira+Code:wght@400;500&display=swap");
 
 .App {
   background-color: #1e1e2e;
@@ -56,15 +56,16 @@ input[type="file"]::file-selector-button {
   border: 3px solid #1e1e2e;
 }
 
-code {
+pre,
+code,
+.code-font {
   font-family: "Fira Code", monospace !important;
-  font-size: 0.9em;
+  font-size: 0.9em !important;
 }
 
-pre {
-  border-radius: 4px;
-  padding: 1em;
-  overflow-x: auto;
+.messages pre,
+.messages code {
+  font-family: "Fira Code", monospace !important;
 }
 
 .token.comment,
