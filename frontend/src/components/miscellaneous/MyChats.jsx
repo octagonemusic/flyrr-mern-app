@@ -94,8 +94,8 @@ const MyChats = ({ fetchAgain }) => {
                 <Box
                   onClick={() => setSelectedChat(chat)}
                   cursor="pointer"
-                  bg={selectedChat === chat ? "#CBA6F7" : "#24273A"}
-                  color={selectedChat === chat ? "black" : "white"}
+                  bg={selectedChat?._id === chat._id ? "#CBA6F7" : "#24273A"}
+                  color={selectedChat?._id === chat._id ? "black" : "white"}
                   px={3}
                   py={2}
                   borderRadius="10px"
@@ -112,7 +112,9 @@ const MyChats = ({ fetchAgain }) => {
                   {chat.latestMessage && (
                     <Text
                       fontSize="xs"
-                      color={selectedChat === chat ? "gray.800" : "gray.400"}
+                      color={
+                        selectedChat?._id === chat._id ? "gray.800" : "gray.400"
+                      }
                     >
                       <b>{chat.latestMessage.sender.name}: </b>
                       {chat.latestMessage.content.length > 50
