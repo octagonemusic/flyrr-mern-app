@@ -3,6 +3,14 @@ import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
+
+// Core and dependencies first
+import "prismjs/components/prism-core";
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-markup";
+import "prismjs/components/prism-markup-templating";
+
+// Then other languages
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-java";
