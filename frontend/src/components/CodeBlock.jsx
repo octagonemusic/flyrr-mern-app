@@ -50,6 +50,8 @@ const CodeBlock = ({ code, language }) => {
         sx={{
           "& *": {
             fontFamily: "Fira Code, monospace !important",
+            fontSize: "0.9em !important",
+            lineHeight: "1.5 !important",
           },
           "&::-webkit-scrollbar": {
             height: "8px",
