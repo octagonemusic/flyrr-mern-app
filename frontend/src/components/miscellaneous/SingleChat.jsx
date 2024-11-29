@@ -31,8 +31,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const toast = useToast();
 
-  const { user, selectedChat, setSelectedChat, notification, setNotification } =
-    ChatState();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+    setChats,
+  } = ChatState();
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -90,6 +96,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        setChats((prevChats) => {
+          return prevChats.map((chat) => {
+            if (chat._id === newMessageRecieved.chat._id) {
+              return { ...chat, latestMessage: newMessageRecieved };
+            }
+            return chat;
+          });
+        });
       }
     });
   });
@@ -139,6 +153,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           );
           socket.emit("new message", data);
           setMessages([...messages, data]);
+
+          // Update latest message in chats
+          setChats((prevChats) => {
+            return prevChats.map((chat) => {
+              if (chat._id === selectedChat._id) {
+                return { ...chat, latestMessage: data };
+              }
+              return chat;
+            });
+          });
         } catch (error) {
           toast({
             title: "Error Occurred!",
