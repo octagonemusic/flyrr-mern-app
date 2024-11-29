@@ -143,6 +143,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(e);
+    }
+  };
+
   return (
     <>
       {selectedChat ? (
