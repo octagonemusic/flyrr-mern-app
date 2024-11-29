@@ -7,10 +7,10 @@ async function connectDB() {
       useUnifiedTopology: true,
     });
 
-    console.log(`Mongo DB connected: ${conn.connection.host}`.cyan.underline);
+    console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
   } catch (error) {
     console.log(`Error: ${error.message}`.red.bold);
-    process.exit();
+    process.exit(1);
   }
 }
 
