@@ -12,6 +12,15 @@ import CodeBlock from "../CodeBlock";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const renderMessage = (m) => {
     if (m.isCode) {
@@ -55,6 +64,7 @@ const ScrollableChat = ({ messages }) => {
             </span>
           </div>
         ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

@@ -146,7 +146,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
+  };
 
+  const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(e);
@@ -200,33 +202,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg={"#1E1E2E"}
-            w="97%"
-            h="88%"
-            margin="0rem"
+            bg="#313244"
+            w="100%"
+            h="100%"
             borderRadius="lg"
             overflowY="hidden"
           >
-            {loading ? (
-              <Spinner
-                size="xl"
-                w={20}
-                h={20}
-                alignSelf="center"
-                margin="auto"
-              />
-            ) : (
-              <div className="messsages">
-                <ScrollableChat messages={messages} />
-              </div>
-            )}
+            <div className="messages" style={{ overflowY: "auto", flex: 1 }}>
+              <ScrollableChat messages={messages} />
+            </div>
 
-            <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+            <FormControl isRequired mt={3}>
               <Textarea
                 borderColor={"#313244"}
                 className="sendmessages"
                 borderRadius={15}
-                textcolor={"#FFFFFF"}
+                color={"#FFFFFF"}
                 variant="filled"
                 bg="#313244"
                 placeholder="Send A Message (Shift + Enter for new line)"
@@ -234,14 +225,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   background: "#313244",
                 }}
                 onChange={typingHandler}
+                onKeyDown={handleKeyDown}
                 value={newMessage}
                 rows={1}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage(e);
-                  }
-                }}
               />
             </FormControl>
           </Box>
