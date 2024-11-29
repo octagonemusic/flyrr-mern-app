@@ -18,6 +18,8 @@
     "axios": "^1.6.0",
     "framer-motion": "^10.16.4",
     "highlight.js": "^11.10.0",
+    "link-preview-js": "^3.0.12",
+    "linkify-it": "^5.0.0",
     "mongoose": "^6.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

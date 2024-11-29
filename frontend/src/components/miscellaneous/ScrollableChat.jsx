@@ -9,10 +9,14 @@ import { ChatState } from "../../context/ChatProvider";
 import { Avatar, Tooltip } from "@chakra-ui/react";
 import "./styles.css";
 import CodeBlock from "../CodeBlock";
+import LinkPreview from "../LinkPreview";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
   const messagesEndRef = useRef(null);
+
+  // URL regex pattern
+  const urlPattern = /(https?:\/\/[^\s]+)/g;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -26,6 +30,21 @@ const ScrollableChat = ({ messages }) => {
     if (m.isCode) {
       return <CodeBlock code={m.content} language={m.language} />;
     }
+
+    // URL detection using regex
+    const matches = m.content.match(urlPattern);
+
+    if (matches) {
+      return (
+        <>
+          <span style={{ whiteSpace: "pre-wrap" }}>{m.content}</span>
+          {matches.map((url, index) => (
+            <LinkPreview key={index} url={url} />
+          ))}
+        </>
+      );
+    }
+
     return <span style={{ whiteSpace: "pre-wrap" }}>{m.content}</span>;
   };
 
