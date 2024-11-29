@@ -15,7 +15,7 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "axios": "^1.6.0",
+    "axios": "^1.7.4",
     "framer-motion": "^10.16.4",
     "highlight.js": "^11.10.0",
     "link-preview-js": "^3.0.12",
