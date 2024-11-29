@@ -39,7 +39,9 @@ const ScrollableChat = ({ messages }) => {
       matches.forEach((url) => {
         content = content.replace(
           url,
-          `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #CBA6F7; text-decoration: underline;">${url}</a>`
+          `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: ${
+            m.sender._id === user._id ? "#313244" : "#CBA6F7"
+          }; text-decoration: underline; font-weight: bold;">${url}</a>`
         );
       });
 

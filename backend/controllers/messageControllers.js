@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Message = require("../models/messageModel");
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
+const { getLinkPreview } = require("link-preview-js");
 
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId, isCode, language } = req.body;
@@ -53,4 +54,25 @@ const allMessages = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { sendMessage, allMessages };
+const fetchLinkPreview = asyncHandler(async (req, res) => {
+  try {
+    const { url } = req.query;
+    if (!url) {
+      return res.status(400).json({ message: "URL is required" });
+    }
+
+    const data = await getLinkPreview(url, {
+      timeout: 5000,
+      followRedirects: "follow",
+      headers: {
+        "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
+      },
+    });
+    res.json(data);
+  } catch (error) {
+    console.error("Link preview error:", error);
+    res.status(400).json({ message: "Failed to fetch link preview" });
+  }
+});
+
+module.exports = { sendMessage, allMessages, fetchLinkPreview };
