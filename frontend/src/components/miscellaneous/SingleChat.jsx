@@ -99,7 +99,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setChats((prevChats) => {
           return prevChats.map((chat) => {
             if (chat._id === newMessageRecieved.chat._id) {
-              return { ...chat, latestMessage: newMessageRecieved };
+              return {
+                ...chat,
+                latestMessage: newMessageRecieved,
+                _id: chat._id, // Preserve the original _id
+              };
             }
             return chat;
           });
@@ -158,7 +162,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           setChats((prevChats) => {
             return prevChats.map((chat) => {
               if (chat._id === selectedChat._id) {
-                return { ...chat, latestMessage: data };
+                return {
+                  ...chat,
+                  latestMessage: data,
+                  _id: chat._id, // Preserve the original _id
+                };
               }
               return chat;
             });
