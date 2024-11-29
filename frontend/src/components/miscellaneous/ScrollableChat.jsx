@@ -8,27 +8,20 @@ import {
 import { ChatState } from "../../context/ChatProvider";
 import { Avatar, Tooltip } from "@chakra-ui/react";
 import "./styles.css";
+import CodeBlock from "../CodeBlock";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
 
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (messages.length) {
-      ref.current?.scrollIntoView({
-        behavior: "auto",
-      });
+  const renderMessage = (m) => {
+    if (m.isCode) {
+      return <CodeBlock code={m.content} language={m.language} />;
     }
-  }, [messages.length]);
+    return <span>{m.content}</span>;
+  };
 
   return (
-    <div
-      className="scroll-feed"
-      style={{
-        paddingTop: "1rem",
-      }}
-    >
+    <div className="messages">
       {messages &&
         messages.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
@@ -45,26 +38,23 @@ const ScrollableChat = ({ messages }) => {
                 />
               </Tooltip>
             )}
-
             <span
               style={{
-                color: `${m.sender._id === user._id ? "#1E1E2E" : "#FFFFFF"}`,
                 backgroundColor: `${
                   m.sender._id === user._id ? "#CBA6F7" : "#313244"
                 }`,
+                color: `${m.sender._id === user._id ? "#1E1E2E" : "#FFFFFF"}`,
                 borderRadius: "20px",
                 padding: "5px 15px",
                 maxWidth: "70%",
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i, user._id) ? 3 : 10,
-                marginBottom: 0,
               }}
             >
-              {m.content}
+              {renderMessage(m)}
             </span>
           </div>
         ))}
-      <div ref={ref} />
     </div>
   );
 };

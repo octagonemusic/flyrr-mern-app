@@ -95,6 +95,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
+      // Check if message is a code block
+      const isCodeBlock =
+        newMessage.startsWith("```") && newMessage.endsWith("```");
+      let content = newMessage;
+      let language = "";
+
+      if (isCodeBlock) {
+        // Extract language and code
+        const firstLineEnd = newMessage.indexOf("\n");
+        const languagePart = newMessage.slice(3, firstLineEnd).trim();
+        language = languagePart || "plaintext";
+        content = newMessage.slice(firstLineEnd + 1, -3).trim();
+      }
+
       try {
         const config = {
           headers: {
@@ -104,20 +118,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
 
         setNewMessage("");
-        setMessages([...messages, { content: newMessage, sender: user }]);
 
-        const { data } = await axios.post(
-          "/api/message",
-          {
-            content: newMessage,
-            chatId: selectedChat._id,
-          },
-          config
-        );
+        const messageData = {
+          content,
+          chatId: selectedChat._id,
+          isCode: isCodeBlock,
+          language,
+        };
 
-        console.log(data);
-
+        const { data } = await axios.post("/api/message", messageData, config);
         socket.emit("new message", data);
+        setMessages([...messages, data]);
         setFetchAgain(!fetchAgain);
       } catch (error) {
         toast({
