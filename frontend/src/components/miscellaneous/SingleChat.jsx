@@ -10,7 +10,7 @@ import {
   useToast,
   Textarea,
 } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../../config/ChatLogics";
 import ProfileModal from "./ProfileModal";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
@@ -214,22 +214,33 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             </div>
 
             <FormControl isRequired mt={3}>
-              <Textarea
-                borderColor={"#313244"}
-                className="sendmessages"
-                borderRadius={15}
-                color={"#FFFFFF"}
-                variant="filled"
-                bg="#313244"
-                placeholder="Send A Message (Shift + Enter for new line)"
-                _hover={{
-                  background: "#313244",
-                }}
-                onChange={typingHandler}
-                onKeyDown={handleKeyDown}
-                value={newMessage}
-                rows={1}
-              />
+              <Box display="flex" gap={2}>
+                <Textarea
+                  borderColor={"#313244"}
+                  className="sendmessages"
+                  borderRadius={15}
+                  color={"#FFFFFF"}
+                  variant="filled"
+                  bg="#313244"
+                  placeholder="Send A Message (Shift + Enter for new line)"
+                  _hover={{
+                    background: "#313244",
+                  }}
+                  onChange={typingHandler}
+                  onKeyDown={handleKeyDown}
+                  value={newMessage}
+                  rows={1}
+                />
+                <IconButton
+                  icon={<ArrowForwardIcon />}
+                  bg="#CBA6F7"
+                  color="black"
+                  borderRadius={15}
+                  _hover={{ bg: "#B4BEFE" }}
+                  onClick={(e) => sendMessage({ key: "Enter" })}
+                  aria-label="Send message"
+                />
+              </Box>
             </FormControl>
           </Box>
         </>
