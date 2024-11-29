@@ -95,51 +95,42 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   });
 
   const sendMessage = async (event) => {
-    if (event.key === "Enter" && newMessage) {
-      // Check if message is a code block
-      const isCodeBlock =
-        newMessage.startsWith("```") && newMessage.endsWith("```");
-      let content = newMessage;
-      let language = "";
-
-      if (isCodeBlock) {
-        // Extract language and code
-        const firstLineEnd = newMessage.indexOf("\n");
-        const languagePart = newMessage.slice(3, firstLineEnd).trim();
-        language = languagePart || "plaintext";
-        content = newMessage.slice(firstLineEnd + 1, -3).trim();
-      }
-
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-
-        setNewMessage("");
-
-        const messageData = {
-          content,
-          chatId: selectedChat._id,
-          isCode: isCodeBlock,
-          language,
-        };
-
-        const { data } = await axios.post("/api/message", messageData, config);
-        socket.emit("new message", data);
-        setMessages([...messages, data]);
-        setFetchAgain(!fetchAgain);
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: error.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-        });
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      if (newMessage) {
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          };
+          setNewMessage("");
+          // Reset textarea height after sending
+          const textarea = document.querySelector(".sendmessages");
+          if (textarea) {
+            textarea.style.height = "40px"; // Reset to initial height
+          }
+          const { data } = await axios.post(
+            "/api/message",
+            {
+              content: newMessage,
+              chatId: selectedChat,
+            },
+            config
+          );
+          socket.emit("new message", data);
+          setMessages([...messages, data]);
+        } catch (error) {
+          toast({
+            title: "Error Occurred!",
+            description: "Failed to send the Message",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+        }
       }
     }
   };
@@ -228,17 +219,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   }}
                   onChange={(e) => {
                     typingHandler(e);
-                    // Reset height to auto first to handle text deletion
-                    e.target.style.height = "auto";
-                    // Set new height based on scrollHeight
-                    e.target.style.height = `${e.target.scrollHeight}px`;
+                    e.target.style.height = "40px";
+                    e.target.style.height = `${Math.min(
+                      e.target.scrollHeight,
+                      150
+                    )}px`;
+                    e.target.style.overflowY =
+                      e.target.scrollHeight > 150 ? "auto" : "hidden";
                   }}
                   onKeyDown={handleKeyDown}
                   value={newMessage}
                   minH="40px"
                   maxH="150px"
                   resize="none"
-                  overflow="auto"
+                  overflow="hidden"
                   rows={1}
                   sx={{
                     "&::-webkit-scrollbar": {
@@ -252,6 +246,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                       borderRadius: "4px",
                     },
                     resize: "none",
+                    "&::-webkit-scrollbar-thumb:hover": {
+                      background: "#45475a",
+                    },
                   }}
                 />
                 <IconButton
