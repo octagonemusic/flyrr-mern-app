@@ -57,6 +57,8 @@ const allMessages = asyncHandler(async (req, res) => {
 const fetchLinkPreview = asyncHandler(async (req, res) => {
   try {
     const { url } = req.query;
+    console.log("Fetching preview for URL:", url);
+
     if (!url) {
       return res.status(400).json({ message: "URL is required" });
     }
@@ -68,9 +70,10 @@ const fetchLinkPreview = asyncHandler(async (req, res) => {
         "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
       },
     });
+    console.log("Preview data:", data);
     res.json(data);
   } catch (error) {
-    console.error("Link preview error:", error);
+    console.error("Link preview error details:", error);
     res.status(400).json({ message: "Failed to fetch link preview" });
   }
 });

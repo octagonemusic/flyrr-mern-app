@@ -8,8 +8,8 @@ const {
 
 const router = express.Router();
 
+router.get("/preview", protect, fetchLinkPreview);
 router.route("/").post(protect, sendMessage);
 router.route("/:chatId").get(protect, allMessages);
-router.get("/preview", protect, fetchLinkPreview);
 
 module.exports = router;
