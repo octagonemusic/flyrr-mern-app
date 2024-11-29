@@ -337,7 +337,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   color="black"
                   borderRadius={15}
                   _hover={{ bg: "#B4BEFE" }}
-                  onClick={(e) => sendMessage({ key: "Enter" })}
+                  onClick={() => {
+                    const event = {
+                      key: "Enter",
+                      preventDefault: () => {},
+                      shiftKey: false,
+                    };
+                    sendMessage(event);
+                  }}
                   aria-label="Send message"
                   alignSelf="flex-end"
                   h="40px"
