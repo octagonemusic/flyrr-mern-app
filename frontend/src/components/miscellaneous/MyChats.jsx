@@ -9,8 +9,42 @@ import GroupChatModal from "./GroupChatModal";
 import "./styles.css";
 
 const MyChats = ({ fetchAgain }) => {
+  const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
   const toast = useToast();
+
+  useEffect(() => {
+    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    fetchChats();
+  }, [fetchAgain]);
+
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      setChats((prevChats) => {
+        return prevChats.map((chat) => {
+          if (chat._id === newMessageReceived.chat._id) {
+            return { ...chat, latestMessage: newMessageReceived };
+          }
+          return chat;
+        });
+      });
+    });
+
+    return () => {
+      socket.off("message received");
+    };
+  }, []);
+
+  const updateLatestMessage = (newMessage) => {
+    setChats((prevChats) => {
+      return prevChats.map((chat) => {
+        if (chat._id === newMessage.chat._id) {
+          return { ...chat, latestMessage: newMessage };
+        }
+        return chat;
+      });
+    });
+  };
 
   const fetchChats = async () => {
     try {
@@ -33,10 +67,6 @@ const MyChats = ({ fetchAgain }) => {
       });
     }
   };
-
-  useEffect(() => {
-    fetchChats();
-  }, [fetchAgain]);
 
   return (
     <Box
@@ -96,7 +126,7 @@ const MyChats = ({ fetchAgain }) => {
                   color={selectedChat === chat ? "black" : "white"}
                   px={3}
                   py={2}
-                  borderRadius="50"
+                  borderRadius="10px"
                   key={chat._id}
                 >
                   <Text>
