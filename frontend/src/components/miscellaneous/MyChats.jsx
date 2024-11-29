@@ -7,6 +7,10 @@ import ChatLoading from "./ChatLoading";
 import { getSender } from "../../config/ChatLogics";
 import GroupChatModal from "./GroupChatModal";
 import "./styles.css";
+import io from "socket.io-client";
+
+const ENDPOINT = "//flyrrchat.onrender.com/"; // Use your backend URL
+var socket;
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -14,24 +18,35 @@ const MyChats = ({ fetchAgain }) => {
   const toast = useToast();
 
   useEffect(() => {
+    socket = io(ENDPOINT);
+    if (user) {
+      socket.emit("setup", user);
+    }
+  }, [user]);
+
+  useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
   }, [fetchAgain]);
 
   useEffect(() => {
-    socket.on("message received", (newMessageReceived) => {
-      setChats((prevChats) => {
-        return prevChats.map((chat) => {
-          if (chat._id === newMessageReceived.chat._id) {
-            return { ...chat, latestMessage: newMessageReceived };
-          }
-          return chat;
+    if (socket) {
+      socket.on("message received", (newMessageReceived) => {
+        setChats((prevChats) => {
+          return prevChats.map((chat) => {
+            if (chat._id === newMessageReceived.chat._id) {
+              return { ...chat, latestMessage: newMessageReceived };
+            }
+            return chat;
+          });
         });
       });
-    });
+    }
 
     return () => {
-      socket.off("message received");
+      if (socket) {
+        socket.off("message received");
+      }
     };
   }, []);
 
