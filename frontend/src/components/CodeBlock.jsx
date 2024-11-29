@@ -11,27 +11,12 @@ import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-json";
 
-// Add support for more common languages
-const loadLanguage = (language) => {
-  try {
-    // Only load if it's not already loaded
-    if (!Prism.languages[language]) {
-      import(`prismjs/components/prism-${language}`);
-    }
-  } catch (e) {
-    console.warn(`Prism language '${language}' not found`);
-  }
-};
-
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
 
   useEffect(() => {
-    if (language) {
-      loadLanguage(language);
-    }
     Prism.highlightAll();
-  }, [code, language]);
+  }, [code]);
 
   return (
     <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
