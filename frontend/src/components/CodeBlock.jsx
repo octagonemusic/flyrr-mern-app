@@ -48,10 +48,22 @@ const CodeBlock = ({ code, language }) => {
         className="code-block-container"
         overflowX="auto"
         sx={{
-          "& *": {
+          "& pre, & code": {
+            margin: 0,
+            padding: 0,
+            background: "transparent",
+            fontSize: "14px !important",
             fontFamily: "Fira Code, monospace !important",
-            fontSize: "0.9em !important",
             lineHeight: "1.5 !important",
+          },
+          "& .token": {
+            fontSize: "inherit !important",
+            fontFamily: "inherit !important",
+            lineHeight: "inherit !important",
+          },
+          "::selection, & *::selection": {
+            background: "#CBA6F7",
+            color: "#1E1E2E",
           },
           "&::-webkit-scrollbar": {
             height: "8px",
@@ -65,7 +77,7 @@ const CodeBlock = ({ code, language }) => {
           },
         }}
       >
-        <pre style={{ margin: 0, background: "transparent" }}>
+        <pre>
           <code className={`language-${language || "plaintext"}`}>{code}</code>
         </pre>
       </Box>
