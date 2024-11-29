@@ -161,6 +161,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(e);
+    } else if (e.key === "Tab") {
+      e.preventDefault(); // Prevent losing focus
+      const start = e.target.selectionStart;
+      const end = e.target.selectionEnd;
+
+      // Add two spaces for tab
+      const newValue =
+        newMessage.substring(0, start) + "  " + newMessage.substring(end);
+      setNewMessage(newValue);
+
+      // Put cursor after the inserted tab
+      setTimeout(() => {
+        e.target.selectionStart = e.target.selectionEnd = start + 2;
+      }, 0);
     }
   };
 
