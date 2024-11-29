@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
 
 const sendMessage = asyncHandler(async (req, res) => {
-  const { content, chatId } = req.body;
+  const { content, chatId, isCode, language } = req.body;
 
   if (!content || !chatId) {
     console.log("No message content or chat ID provided");
@@ -15,6 +15,8 @@ const sendMessage = asyncHandler(async (req, res) => {
     sender: req.user._id,
     content: content,
     chat: chatId,
+    isCode: isCode || false,
+    language: language || "",
   };
 
   try {

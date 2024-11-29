@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
   useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../../config/ChatLogics";
@@ -142,13 +143,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
-
-  const typingHandler = (e) => {
-    setNewMessage(e.target.value.trimStart());
-
-    //Typing Indicator lol
-  };
-
   return (
     <>
       {selectedChat ? (
@@ -218,19 +212,26 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             )}
 
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              <Input
+              <Textarea
                 borderColor={"#313244"}
                 className="sendmessages"
-                borderRadius={50}
+                borderRadius={15}
                 textcolor={"#FFFFFF"}
                 variant="filled"
                 bg="#313244"
-                placeholder="Send A Message"
+                placeholder="Send A Message (Shift + Enter for new line)"
                 _hover={{
                   background: "#313244",
                 }}
                 onChange={typingHandler}
                 value={newMessage}
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(e);
+                  }
+                }}
               />
             </FormControl>
           </Box>
