@@ -107,6 +107,17 @@ const MyChats = ({ fetchAgain }) => {
                         )
                       : chat.chatName}
                   </Text>
+                  {chat.latestMessage && (
+                    <Text
+                      fontSize="xs"
+                      color={selectedChat === chat ? "gray.800" : "gray.400"}
+                    >
+                      <b>{chat.latestMessage.sender.name}: </b>
+                      {chat.latestMessage.content.length > 50
+                        ? chat.latestMessage.content.substring(0, 51) + "..."
+                        : chat.latestMessage.content}
+                    </Text>
+                  )}
                 </Box>
               );
             })}
