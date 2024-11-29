@@ -226,7 +226,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   _hover={{
                     background: "#313244",
                   }}
-                  onChange={typingHandler}
+                  onChange={(e) => {
+                    typingHandler(e);
+                    // Reset height to auto first to handle text deletion
+                    e.target.style.height = "auto";
+                    // Set new height based on scrollHeight
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  }}
                   onKeyDown={handleKeyDown}
                   value={newMessage}
                   minH="40px"
