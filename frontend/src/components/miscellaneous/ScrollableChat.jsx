@@ -35,9 +35,20 @@ const ScrollableChat = ({ messages }) => {
     const matches = m.content.match(urlPattern);
 
     if (matches) {
+      let content = m.content;
+      matches.forEach((url) => {
+        content = content.replace(
+          url,
+          `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #CBA6F7; text-decoration: underline;">${url}</a>`
+        );
+      });
+
       return (
         <>
-          <span style={{ whiteSpace: "pre-wrap" }}>{m.content}</span>
+          <span
+            style={{ whiteSpace: "pre-wrap" }}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
           {matches.map((url, index) => (
             <LinkPreview key={index} url={url} />
           ))}
