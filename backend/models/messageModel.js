@@ -5,6 +5,8 @@ const messageModel = mongoose.Schema(
     sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     content: { type: String, trim: true },
     chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat" },
+    isCode: { type: Boolean, default: false },
+    language: { type: String, default: "" },
   },
   { timestamps: true }
 );
