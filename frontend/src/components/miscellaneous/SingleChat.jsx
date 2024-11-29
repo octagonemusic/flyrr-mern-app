@@ -105,18 +105,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               Authorization: `Bearer ${user.token}`,
             },
           };
+
+          // Check if message starts and ends with triple backticks
+          const codeBlockRegex = /^```(\w+)?\n([\s\S]*?)```$/;
+          const match = newMessage.match(codeBlockRegex);
+
+          let messageData = {
+            content: newMessage,
+            chatId: selectedChat,
+            isCode: false,
+            language: null,
+          };
+
+          if (match) {
+            messageData = {
+              content: match[2], // The code content
+              chatId: selectedChat,
+              isCode: true,
+              language: match[1] || "plaintext", // The language or default to plaintext
+            };
+          }
+
           setNewMessage("");
-          // Reset textarea height after sending
           const textarea = document.querySelector(".sendmessages");
           if (textarea) {
-            textarea.style.height = "40px"; // Reset to initial height
+            textarea.style.height = "40px";
           }
+
           const { data } = await axios.post(
             "/api/message",
-            {
-              content: newMessage,
-              chatId: selectedChat,
-            },
+            messageData,
             config
           );
           socket.emit("new message", data);
