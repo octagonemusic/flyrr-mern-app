@@ -5,6 +5,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/tokyo-night-dark.css";
 import axios from "axios";
 import CodeExecutionModal from "./CodeExecutionModal";
+import { ChatState } from "../../context/ChatProvider";
 
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
@@ -12,6 +13,7 @@ const CodeBlock = ({ code, language }) => {
   const [output, setOutput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const codeRef = useRef(null);
+  const { user } = ChatState();
 
   // Map your language names to Judge0 language IDs
   const languageMap = {
@@ -26,11 +28,20 @@ const CodeBlock = ({ code, language }) => {
     setIsLoading(true);
     setIsModalOpen(true);
     try {
-      // Make sure your backend URL is correct
-      const response = await axios.post("/api/execute", {
-        source_code: code,
-        language_id: languageMap[language?.toLowerCase()] || 71,
-      });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const response = await axios.post(
+        "/api/execute",
+        {
+          source_code: code,
+          language_id: languageMap[language?.toLowerCase()] || 71,
+        },
+        config
+      );
       setOutput(response.data.output);
     } catch (error) {
       setOutput(error.response?.data?.error || "Error executing code");
