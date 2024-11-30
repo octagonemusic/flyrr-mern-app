@@ -1,145 +1,91 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Text,
-  useClipboard,
-  IconButton,
-  Switch,
-  Flex,
-} from "@chakra-ui/react";
-import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
-import hljs from "highlight.js";
-import "highlight.js/styles/tokyo-night-dark.css";
+import React, { useState, useEffect } from "react";
+import { Box, Image, Text, Spinner } from "@chakra-ui/react";
+import axios from "axios";
+import { ChatState } from "../context/ChatProvider";
 
-const CodeBlock = ({ code, language }) => {
-  const [showLineNumbers, setShowLineNumbers] = useState(true);
-  const { hasCopied, onCopy } = useClipboard(code);
-  const codeRef = useRef(null);
+const LinkPreview = ({ url, previewData }) => {
+  const [preview, setPreview] = useState(previewData);
+  const [loading, setLoading] = useState(!previewData);
+  const [imageError, setImageError] = useState(false);
+  const { user } = ChatState();
 
   useEffect(() => {
-    if (codeRef.current) {
-      hljs.highlightElement(codeRef.current);
+    if (!previewData) {
+      const fetchPreview = async () => {
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          };
+          const { data } = await axios.get(
+            `/api/message/preview?url=${encodeURIComponent(url)}`,
+            config
+          );
+          if (
+            data &&
+            (data.title ||
+              data.description ||
+              (data.images && data.images.length))
+          ) {
+            setPreview(data);
+          }
+        } catch (error) {
+          console.error("Error fetching link preview:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPreview();
     }
-  }, [code, language, showLineNumbers]);
+  }, [url, user.token, previewData]);
 
-  const renderCodeWithLineNumbers = () => {
-    const lines = code.split("\n");
+  if (loading) {
     return (
-      <table
-        style={{ borderSpacing: 0, borderCollapse: "collapse", width: "100%" }}
-      >
-        <tbody>
-          {lines.map((line, index) => (
-            <tr key={index} style={{ height: "1.5em" }}>
-              {showLineNumbers && (
-                <td
-                  style={{
-                    userSelect: "none",
-                    color: "#6C7086",
-                    paddingRight: "1em",
-                    textAlign: "right",
-                    fontFamily: "Fira Code, monospace",
-                    borderRight: "1px solid #313244",
-                    position: "sticky",
-                    left: 0,
-                    background: "#1E1E2E",
-                    verticalAlign: "top",
-                    width: "1%", // Make line number column as narrow as possible
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {index + 1}
-                </td>
-              )}
-              <td
-                style={{
-                  paddingLeft: "1em",
-                  fontFamily: "Fira Code, monospace",
-                  whiteSpace: "pre",
-                  verticalAlign: "top",
-                }}
-              >
-                {line || " "}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Box mt={2}>
+        <Spinner size="sm" color="#CBA6F7" />
+      </Box>
     );
-  };
+  }
+
+  if (!preview) return null;
 
   return (
-    <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
-      <Flex mb={3} justifyContent="space-between" alignItems="center">
-        <Flex alignItems="center" gap={4}>
-          <Text
-            color="#CBA6F7"
-            fontSize="sm"
-            fontFamily="Fira Code, monospace"
-            textTransform="lowercase"
-          >
-            {language || "plaintext"}
+    <Box
+      mt={2}
+      p={2}
+      bg="#313244"
+      borderRadius="md"
+      cursor="pointer"
+      onClick={() => window.open(url, "_blank")}
+      _hover={{ bg: "#45475a" }}
+      transition="background 0.2s"
+    >
+      <Box display="flex" gap={3}>
+        {preview.images && preview.images[0] && !imageError && (
+          <Image
+            src={preview.images[0]}
+            alt={preview.title || "Link preview"}
+            maxH="80px"
+            maxW="80px"
+            objectFit="cover"
+            borderRadius="md"
+            onError={() => setImageError(true)}
+          />
+        )}
+        <Box flex="1">
+          <Text fontSize="sm" fontWeight="bold" color="#CBA6F7">
+            {preview.title || url}
           </Text>
-          <Switch
-            size="sm"
-            isChecked={showLineNumbers}
-            onChange={() => setShowLineNumbers(!showLineNumbers)}
-            colorScheme="purple"
-          >
-            <Text color="#CBA6F7" fontSize="sm" ml={2}>
-              Line Numbers
+          {preview.description && (
+            <Text fontSize="xs" color="gray.300" noOfLines={2}>
+              {preview.description}
             </Text>
-          </Switch>
-        </Flex>
-        <IconButton
-          size="sm"
-          icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
-          onClick={onCopy}
-          bg="#CBA6F7"
-          color="black"
-          _hover={{ bg: "#B4BEFE" }}
-          aria-label="Copy code"
-        />
-      </Flex>
-      <Box
-        className="code-block-container"
-        overflowX="auto"
-        sx={{
-          "& pre": {
-            margin: 0,
-            padding: 0,
-          },
-          "& code": {
-            fontFamily: "Fira Code, monospace !important",
-            fontSize: "14px !important",
-            lineHeight: "1.5 !important",
-            background: "transparent !important",
-            display: "block",
-          },
-          "::selection, & *::selection": {
-            background: "#CBA6F7",
-            color: "#1E1E2E",
-          },
-          "&::-webkit-scrollbar": {
-            height: "8px",
-          },
-          "&::-webkit-scrollbar-track": {
-            background: "#181825",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            background: "#313244",
-            borderRadius: "4px",
-          },
-        }}
-      >
-        <pre>
-          <code ref={codeRef} className={language || "plaintext"}>
-            {renderCodeWithLineNumbers()}
-          </code>
-        </pre>
+          )}
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default CodeBlock;
+export default LinkPreview;
