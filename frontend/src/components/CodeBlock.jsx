@@ -24,26 +24,35 @@ const CodeBlock = ({ code, language }) => {
 
   const renderCodeWithLineNumbers = () => {
     const lines = code.split("\n");
-    return lines.map((line, index) => (
-      <div key={index} className="code-line" style={{ display: "flex" }}>
+    return (
+      <div style={{ display: "flex" }}>
         {showLineNumbers && (
-          <span
-            className="line-number"
+          <div
             style={{
               userSelect: "none",
               color: "#6C7086",
               marginRight: "1em",
-              minWidth: "2em",
+              paddingRight: "1em",
+              borderRight: "1px solid #313244",
               textAlign: "right",
               fontFamily: "Fira Code, monospace",
+              position: "sticky",
+              left: 0,
+              background: "#1E1E2E",
             }}
           >
-            {index + 1}
-          </span>
+            {lines.map((_, index) => (
+              <div key={index}>{index + 1}</div>
+            ))}
+          </div>
         )}
-        <span className="line-content">{line}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {lines.map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
+        </div>
       </div>
-    ));
+    );
   };
 
   return (
