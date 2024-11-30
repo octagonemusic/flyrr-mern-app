@@ -1,91 +1,83 @@
-import React, { useState, useEffect } from "react";
-import { Box, Image, Text, Spinner } from "@chakra-ui/react";
-import axios from "axios";
-import { ChatState } from "../context/ChatProvider";
+import React, { useEffect, useRef } from "react";
+import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
+import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
+import hljs from "highlight.js";
+import "highlight.js/styles/tokyo-night-dark.css"; // This theme matches your dark theme
 
-const LinkPreview = ({ url, previewData }) => {
-  const [preview, setPreview] = useState(previewData);
-  const [loading, setLoading] = useState(!previewData);
-  const [imageError, setImageError] = useState(false);
-  const { user } = ChatState();
+const CodeBlock = ({ code, language }) => {
+  const { hasCopied, onCopy } = useClipboard(code);
+  const codeRef = useRef(null);
 
   useEffect(() => {
-    if (!previewData) {
-      const fetchPreview = async () => {
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          };
-          const { data } = await axios.get(
-            `/api/message/preview?url=${encodeURIComponent(url)}`,
-            config
-          );
-          if (
-            data &&
-            (data.title ||
-              data.description ||
-              (data.images && data.images.length))
-          ) {
-            setPreview(data);
-          }
-        } catch (error) {
-          console.error("Error fetching link preview:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchPreview();
+    if (codeRef.current) {
+      hljs.highlightElement(codeRef.current);
     }
-  }, [url, user.token, previewData]);
-
-  if (loading) {
-    return (
-      <Box mt={2}>
-        <Spinner size="sm" color="#CBA6F7" />
-      </Box>
-    );
-  }
-
-  if (!preview) return null;
+  }, [code, language]);
 
   return (
-    <Box
-      mt={2}
-      p={2}
-      bg="#313244"
-      borderRadius="md"
-      cursor="pointer"
-      onClick={() => window.open(url, "_blank")}
-      _hover={{ bg: "#45475a" }}
-      transition="background 0.2s"
-    >
-      <Box display="flex" gap={3}>
-        {preview.images && preview.images[0] && !imageError && (
-          <Image
-            src={preview.images[0]}
-            alt={preview.title || "Link preview"}
-            maxH="80px"
-            maxW="80px"
-            objectFit="cover"
-            borderRadius="md"
-            onError={() => setImageError(true)}
-          />
-        )}
-        <Box flex="1">
-          <Text fontSize="sm" fontWeight="bold" color="#CBA6F7">
-            {preview.title || url}
-          </Text>
-          {preview.description && (
-            <Text fontSize="xs" color="gray.300" noOfLines={2}>
-              {preview.description}
-            </Text>
-          )}
-        </Box>
+    <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
+      <Box
+        mb={3}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text
+          color="#CBA6F7"
+          fontSize="sm"
+          fontFamily="Fira Code, monospace"
+          textTransform="lowercase"
+        >
+          {language || "plaintext"}
+        </Text>
+        <IconButton
+          size="sm"
+          icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
+          onClick={onCopy}
+          bg="#CBA6F7"
+          color="black"
+          _hover={{ bg: "#B4BEFE" }}
+          aria-label="Copy code"
+        />
+      </Box>
+      <Box
+        className="code-block-container"
+        overflowX="auto"
+        sx={{
+          "& pre": {
+            margin: 0,
+            padding: 0,
+          },
+          "& code": {
+            fontFamily: "Fira Code, monospace !important",
+            fontSize: "14px !important",
+            lineHeight: "1.5 !important",
+            background: "transparent !important",
+          },
+          "::selection, & *::selection": {
+            background: "#CBA6F7",
+            color: "#1E1E2E",
+          },
+          "&::-webkit-scrollbar": {
+            height: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#181825",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#313244",
+            borderRadius: "4px",
+          },
+        }}
+      >
+        <pre>
+          <code ref={codeRef} className={language || "plaintext"}>
+            {code}
+          </code>
+        </pre>
       </Box>
     </Box>
   );
 };
 
-export default LinkPreview;
+export default CodeBlock;
