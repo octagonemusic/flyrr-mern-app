@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Text, useClipboard, IconButton, Flex } from "@chakra-ui/react";
-import { CopyIcon, CheckIcon, PlayIcon } from "@chakra-ui/icons";
+import { CopyIcon, CheckIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import hljs from "highlight.js";
 import "highlight.js/styles/tokyo-night-dark.css";
 import axios from "axios";
@@ -74,11 +74,11 @@ const CodeBlock = ({ code, language }) => {
           {language && languageMap[language.toLowerCase()] && (
             <IconButton
               size="sm"
-              icon={<PlayIcon />}
+              icon={<TriangleUpIcon transform="rotate(90deg)" />}
               onClick={executeCode}
-              bg="#CBA6F7"
+              bg="#A6E3A1"
               color="black"
-              _hover={{ bg: "#B4BEFE" }}
+              _hover={{ bg: "#94E2D5" }}
               aria-label="Execute code"
             />
           )}
