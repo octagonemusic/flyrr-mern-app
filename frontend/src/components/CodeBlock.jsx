@@ -1,10 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Text,
+  useClipboard,
+  IconButton,
+  Switch,
+  Flex,
+} from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 import hljs from "highlight.js";
-import "highlight.js/styles/tokyo-night-dark.css"; // This theme matches your dark theme
+import "highlight.js/styles/tokyo-night-dark.css";
 
 const CodeBlock = ({ code, language }) => {
+  const [showLineNumbers, setShowLineNumbers] = useState(true);
   const { hasCopied, onCopy } = useClipboard(code);
   const codeRef = useRef(null);
 
@@ -12,24 +20,55 @@ const CodeBlock = ({ code, language }) => {
     if (codeRef.current) {
       hljs.highlightElement(codeRef.current);
     }
-  }, [code, language]);
+  }, [code, language, showLineNumbers]);
+
+  const renderCodeWithLineNumbers = () => {
+    const lines = code.split("\n");
+    return lines.map((line, index) => (
+      <div key={index} className="code-line" style={{ display: "flex" }}>
+        {showLineNumbers && (
+          <span
+            className="line-number"
+            style={{
+              userSelect: "none",
+              color: "#6C7086",
+              marginRight: "1em",
+              minWidth: "2em",
+              textAlign: "right",
+              fontFamily: "Fira Code, monospace",
+            }}
+          >
+            {index + 1}
+          </span>
+        )}
+        <span className="line-content">{line}</span>
+      </div>
+    ));
+  };
 
   return (
     <Box bg="#1E1E2E" p={4} borderRadius="md" position="relative" mt={2} mb={2}>
-      <Box
-        mb={3}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Text
-          color="#CBA6F7"
-          fontSize="sm"
-          fontFamily="Fira Code, monospace"
-          textTransform="lowercase"
-        >
-          {language || "plaintext"}
-        </Text>
+      <Flex mb={3} justifyContent="space-between" alignItems="center">
+        <Flex alignItems="center" gap={4}>
+          <Text
+            color="#CBA6F7"
+            fontSize="sm"
+            fontFamily="Fira Code, monospace"
+            textTransform="lowercase"
+          >
+            {language || "plaintext"}
+          </Text>
+          <Switch
+            size="sm"
+            isChecked={showLineNumbers}
+            onChange={() => setShowLineNumbers(!showLineNumbers)}
+            colorScheme="purple"
+          >
+            <Text color="#CBA6F7" fontSize="sm" ml={2}>
+              Line Numbers
+            </Text>
+          </Switch>
+        </Flex>
         <IconButton
           size="sm"
           icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
@@ -39,7 +78,7 @@ const CodeBlock = ({ code, language }) => {
           _hover={{ bg: "#B4BEFE" }}
           aria-label="Copy code"
         />
-      </Box>
+      </Flex>
       <Box
         className="code-block-container"
         overflowX="auto"
@@ -53,6 +92,7 @@ const CodeBlock = ({ code, language }) => {
             fontSize: "14px !important",
             lineHeight: "1.5 !important",
             background: "transparent !important",
+            display: "block",
           },
           "::selection, & *::selection": {
             background: "#CBA6F7",
@@ -72,7 +112,7 @@ const CodeBlock = ({ code, language }) => {
       >
         <pre>
           <code ref={codeRef} className={language || "plaintext"}>
-            {code}
+            {renderCodeWithLineNumbers()}
           </code>
         </pre>
       </Box>
