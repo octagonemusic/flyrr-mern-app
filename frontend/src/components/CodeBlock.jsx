@@ -25,33 +25,46 @@ const CodeBlock = ({ code, language }) => {
   const renderCodeWithLineNumbers = () => {
     const lines = code.split("\n");
     return (
-      <div style={{ display: "flex" }}>
-        {showLineNumbers && (
-          <div
-            style={{
-              userSelect: "none",
-              color: "#6C7086",
-              marginRight: "1em",
-              paddingRight: "1em",
-              borderRight: "1px solid #313244",
-              textAlign: "right",
-              fontFamily: "Fira Code, monospace",
-              position: "sticky",
-              left: 0,
-              background: "#1E1E2E",
-            }}
-          >
-            {lines.map((_, index) => (
-              <div key={index}>{index + 1}</div>
-            ))}
-          </div>
-        )}
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <table
+        style={{ borderSpacing: 0, borderCollapse: "collapse", width: "100%" }}
+      >
+        <tbody>
           {lines.map((line, index) => (
-            <div key={index}>{line}</div>
+            <tr key={index} style={{ height: "1.5em" }}>
+              {showLineNumbers && (
+                <td
+                  style={{
+                    userSelect: "none",
+                    color: "#6C7086",
+                    paddingRight: "1em",
+                    textAlign: "right",
+                    fontFamily: "Fira Code, monospace",
+                    borderRight: "1px solid #313244",
+                    position: "sticky",
+                    left: 0,
+                    background: "#1E1E2E",
+                    verticalAlign: "top",
+                    width: "1%", // Make line number column as narrow as possible
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {index + 1}
+                </td>
+              )}
+              <td
+                style={{
+                  paddingLeft: "1em",
+                  fontFamily: "Fira Code, monospace",
+                  whiteSpace: "pre",
+                  verticalAlign: "top",
+                }}
+              >
+                {line || " "}
+              </td>
+            </tr>
           ))}
-        </div>
-      </div>
+        </tbody>
+      </table>
     );
   };
 
