@@ -18,6 +18,7 @@ app.use(express.json()); // to parse json data in the body
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+app.use("/api/execute", require("./routes/codeRoutes"));
 
 // _________________________________DEPLOYMENT____________________________________
 

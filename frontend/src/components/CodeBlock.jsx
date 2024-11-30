@@ -1,12 +1,43 @@
-import React, { useEffect, useRef } from "react";
-import { Box, Text, useClipboard, IconButton } from "@chakra-ui/react";
-import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Box, Text, useClipboard, IconButton, Flex } from "@chakra-ui/react";
+import { CopyIcon, CheckIcon, PlayIcon } from "@chakra-ui/icons";
 import hljs from "highlight.js";
-import "highlight.js/styles/tokyo-night-dark.css"; // This theme matches your dark theme
+import "highlight.js/styles/tokyo-night-dark.css";
+import axios from "axios";
+import CodeExecutionModal from "./CodeExecutionModal";
 
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [output, setOutput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const codeRef = useRef(null);
+
+  // Map your language names to Judge0 language IDs
+  const languageMap = {
+    python: 71,
+    javascript: 63,
+    java: 62,
+    cpp: 54,
+    c: 50,
+  };
+
+  const executeCode = async () => {
+    setIsLoading(true);
+    setIsModalOpen(true);
+    try {
+      // Make sure your backend URL is correct
+      const response = await axios.post("/api/execute", {
+        source_code: code,
+        language_id: languageMap[language?.toLowerCase()] || 71,
+      });
+      setOutput(response.data.output);
+    } catch (error) {
+      setOutput(error.response?.data?.error || "Error executing code");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (codeRef.current) {
@@ -30,15 +61,28 @@ const CodeBlock = ({ code, language }) => {
         >
           {language || "plaintext"}
         </Text>
-        <IconButton
-          size="sm"
-          icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
-          onClick={onCopy}
-          bg="#CBA6F7"
-          color="black"
-          _hover={{ bg: "#B4BEFE" }}
-          aria-label="Copy code"
-        />
+        <Flex gap={2}>
+          <IconButton
+            size="sm"
+            icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
+            onClick={onCopy}
+            bg="#CBA6F7"
+            color="black"
+            _hover={{ bg: "#B4BEFE" }}
+            aria-label="Copy code"
+          />
+          {language && languageMap[language.toLowerCase()] && (
+            <IconButton
+              size="sm"
+              icon={<PlayIcon />}
+              onClick={executeCode}
+              bg="#CBA6F7"
+              color="black"
+              _hover={{ bg: "#B4BEFE" }}
+              aria-label="Execute code"
+            />
+          )}
+        </Flex>
       </Box>
       <Box
         className="code-block-container"
@@ -76,6 +120,14 @@ const CodeBlock = ({ code, language }) => {
           </code>
         </pre>
       </Box>
+      {isModalOpen && (
+        <CodeExecutionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          output={output}
+          isLoading={isLoading}
+        />
+      )}
     </Box>
   );
 };
