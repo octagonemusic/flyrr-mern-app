@@ -13,6 +13,7 @@
   "author": "Bhargav Prasad",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.8",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
