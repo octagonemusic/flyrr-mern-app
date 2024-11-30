@@ -5,7 +5,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/tokyo-night-dark.css";
 import axios from "axios";
 import CodeExecutionModal from "./CodeExecutionModal";
-import { ChatState } from "../../context/ChatProvider";
+import { ChatState } from "../context/ChatProvider";
 
 const CodeBlock = ({ code, language }) => {
   const { hasCopied, onCopy } = useClipboard(code);
